@@ -14,3 +14,7 @@
 ::-webkit-scrollbar-track {
   background-color: black;
 }
+
+body {
+  background-color: rgb(0 0 0 / 0.9);
+}

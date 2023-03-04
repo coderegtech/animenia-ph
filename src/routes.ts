@@ -1,6 +1,11 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 
 const routes = [
+    // {
+    //     path: '*',
+    //     name: 'error-page',
+    //     component: () => import("./views/ErrorPage.vue")
+    // },
     {
         path: '/',
         name: 'home',
@@ -30,7 +35,12 @@ const routes = [
         path: '/genre/:genre',
         name: 'anime-genres',
         component: () => import("./views/Genres.vue")
-    }
+    }, 
+    {
+        path: '/watch/:episode',
+        name: 'watch-anime',
+        component: () => import("./views/Watch.vue")
+    }, 
 ]
 
 

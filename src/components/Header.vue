@@ -6,23 +6,24 @@ import Loading from './Loading.vue';
 import Navbar from "./Navbar.vue";
 
 
+
 export default defineComponent({
-    components: {Loading, Navbar},
+    components: { Loading, Navbar },
     data() {
         return {
             searchValue: "" as string,
             isLoading: false,
             animeList: [] as Search[],
-            isActive: false, 
-            navbarActive: false
+            isActive: false as boolean,
+            navbarActive: false as boolean
         }
-    }, 
+    },
     methods: {
         handleSearch() {
-            this.$router.push({name: 'search-anime', params: {name: this.searchValue}})
+            this.$router.push({ name: 'search-anime', params: { name: this.searchValue } })
             this.searchValue = ""
         }, async searchInput() {
-            
+
             this.isLoading = true
             await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${this.searchValue}`).then(response => {
                 this.isActive = true
@@ -33,9 +34,9 @@ export default defineComponent({
             }).catch(err => {
                 console.log(err);
             })
-            
+
         }
-    }, 
+    },
 })
 
 
@@ -46,12 +47,15 @@ export default defineComponent({
 
 
 <template>
-    <header class="relative w-full min-h-[80px] p-5 md:p-10 bg-black border-b-4 border-[red] flex justify-between items-center">
-        <router-link to="/" class="title"><h1 class="  text-white text-3xl font-bold">Animenia.<span class="text-[red]">ph</span></h1> </router-link> 
+    <header
+        class="fixed top-0 left-0 w-full min-h-[60px] p-5 lg:p-8 bg-black border-b-4 border-[red] flex justify-between items-center z-50">
+        <router-link to="/" class="title">
+            <h1 class="  text-white text-3xl font-bold">Animenia.<span class="text-[red]">ph</span></h1>
+        </router-link>
 
 
         <!-- navbar -->
-        <ul class="text-white md:flex gap-5 hidden">
+        <ul class="text-white lg:flex gap-5 hidden">
             <li class="cursor-pointer hover:text-[red]"><router-link to="/">HOME</router-link></li>
             <li class="cursor-pointer hover:text-[red]">ANIME LIST</li>
             <li class="cursor-pointer hover:text-[red]">NEW SEASON</li>
@@ -60,23 +64,26 @@ export default defineComponent({
         </ul>
 
         <!-- search bar -->
-        <div class="relative">
-            <form @submit.prevent="handleSearch()" class=" bg-white  rounded-lg md:flex hidden overflow-hidden">
+        <div class="relative hidden lg:block">
+            <form @submit.prevent="handleSearch()" class=" bg-white  rounded-lg flex overflow-hidden">
 
-                <input class="bg-transparent focus:outline-none p-2 px-3" type="text" placeholder="Search Anime..." @keypress="searchInput"  v-model="searchValue">
-            <button type="submit" class="bg-[red] px-2 text-white font-bold text-sm" >
-             SEARCH
-            </button>
-            
+                <input class="w-full bg-transparent focus:outline-none p-2 px-3" type="text" placeholder="Search Anime..."
+                    @keypress="searchInput" v-model="searchValue">
+                <button type="submit" class="bg-[red] px-2 text-white font-bold text-sm">
+                    <v-icon name="io-search" scale="1.5"></v-icon>
+                </button>
+
             </form>
 
-            <div v-if="isActive && searchValue" class="absolute top-12 right-0 w-full max-h-80  bg-black border border-white/20 rounded-md  overflow-y-auto scrollbar">
+            <div v-if="isActive && searchValue"
+                class="absolute top-12 right-0 w-full max-h-80  bg-black border border-white/20 rounded-md  overflow-y-auto scrollbar">
                 <p class="text-white text-center" v-if="isLoading">loading...</p>
 
                 <p class="text-white text-center" v-else-if="!animeList.length">Not found</p>
-                
+
                 <ul v-else>
-                    <li v-for="anime in animeList" :key="anime.animeId" class="flex gap-3 p-2 cursor-pointer hover:bg-white/10">
+                    <li v-for="anime in animeList" :key="anime.animeId"
+                        class="flex gap-3 p-2 cursor-pointer hover:bg-white/10">
                         <img :src="anime.animeImg" class="w-10 h-14 object-cover" alt="">
 
                         <p class="text-white text-sm">{{ anime.animeTitle }}</p>
@@ -89,21 +96,18 @@ export default defineComponent({
 
 
         <!-- toggle menu -->
-        <div @click="navbarActive = !navbarActive" class="toggle-menu md:hidden w-10 h-10 flex flex-col justify-evenly">
+        <div @click="navbarActive = !navbarActive"
+            class="toggle-menu lg:hidden w-10 h-10 flex flex-col justify-evenly z-50">
             <span class="w-full h-1 bg-white"></span>
             <span class="w-full h-1 bg-white"></span>
             <span class="w-full h-1 bg-white"></span>
         </div>
-            
-        <Navbar :active-navbar="navbarActive"/>
-           
+
+        <Navbar :active="navbarActive" />
+
 
 
     </header>
-
-
-
-
 </template>
 
 <style scoped>
@@ -123,7 +127,4 @@ export default defineComponent({
     color: red;
     border-bottom: 2px solid red;
 }
-
-
-
 </style>

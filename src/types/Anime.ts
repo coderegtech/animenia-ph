@@ -1,4 +1,5 @@
 export interface Anime {
+    animeId: string,
     episodeId: string,
     animeTitle: string,
     episodeNum: string,
@@ -50,4 +51,24 @@ export interface Genres {
     animeImg: string,
     releasedDate: string,
     animeUrl: string
+}
+
+export interface Watch {
+animeTitle: string,
+type: string,
+releasedDate: string,
+status: string,
+genres: [string],
+otherNames: string,
+synopsis: string,
+animeImg: string,
+episodeAvaliable: string,
+episodesList: [
+    {
+        episodeId: string,
+        episodeNum: string,
+        episodeUrl: string
+    }
+]
+
 }
