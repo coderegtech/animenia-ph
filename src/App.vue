@@ -11,9 +11,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="relative max-w-[1440px] w-full mx-auto overflow-hidden">
+  <div class=" max-w-[1440px] w-full mx-auto overflow-hidden">
     <Header />
-    <router-view class="mt-[85px] lg:mt-[110px]"></router-view>
+    <router-view class="mt-[75px] lg:mt-[110px]"></router-view>
     <Footer />
   </div>
 </template>

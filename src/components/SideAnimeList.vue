@@ -39,7 +39,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="hidden md:flex flex-col gap-5 min-w-[300px] h-full">
+  <div class="hidden lg:flex flex-col gap-5 min-w-[300px] h-full">
     <div class="bg-black rounded-xl overflow-hidden">
       <header class="bg-[red] w-full">
         <h3 class="font-semibold text-white px-3 py-2">TOP ANIME</h3>

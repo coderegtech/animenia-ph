@@ -48,9 +48,12 @@ export default defineComponent({
 
 <template>
     <header
-        class="fixed top-0 left-0 w-full min-h-[60px] p-5 lg:p-8 bg-black border-b-4 border-[red] flex justify-between items-center z-50">
+        class="fixed top-0 left-1/2 -translate-x-1/2 max-w-[1440px] w-full mx-auto  min-h-[60px] p-5 lg:p-8 bg-black border-b-4 border-[red] flex gap-5 justify-between items-center z-50">
+
+
+
         <router-link to="/" class="title">
-            <h1 class="  text-white text-3xl font-bold">Animenia.<span class="text-[red]">ph</span></h1>
+            <h1 class="  text-white text-2xl md:text-3xl font-bold">Animenia.<span class="text-[red]">ph</span></h1>
         </router-link>
 
 
@@ -94,18 +97,15 @@ export default defineComponent({
 
         </div>
 
-
         <!-- toggle menu -->
-        <div @click="navbarActive = !navbarActive"
-            class="toggle-menu lg:hidden w-10 h-10 flex flex-col justify-evenly z-50">
-            <span class="w-full h-1 bg-white"></span>
-            <span class="w-full h-1 bg-white"></span>
-            <span class="w-full h-1 bg-white"></span>
+        <div @click="navbarActive = !navbarActive" :class="{ 'active': navbarActive }"
+            class="toggle-menu lg:hidden w-8 h-8 flex flex-col justify-evenly z-50">
+            <span class="w-full h-[3px] bg-white rounded-lg"></span>
+            <span class="w-full h-[3px] bg-white rounded-lg"></span>
+            <span class="w-full h-[3px] bg-white rounded-lg"></span>
         </div>
 
         <Navbar :active="navbarActive" />
-
-
 
     </header>
 </template>
@@ -126,5 +126,25 @@ export default defineComponent({
 .router-link-active:not(.title) {
     color: red;
     border-bottom: 2px solid red;
+}
+
+.toggle-menu span {
+    transition: all 300ms ease-in-out;
+}
+
+
+.toggle-menu.active span:nth-child(1) {
+    transform: rotate(40deg) translate(3px, 10px);
+    background-color: red;
+}
+
+.toggle-menu.active span:nth-child(2) {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.toggle-menu.active span:nth-child(3) {
+    transform: rotate(-40deg) translate(5px, -10px);
+    background-color: red;
 }
 </style>

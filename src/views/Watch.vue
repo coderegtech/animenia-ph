@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 
 import SideAnimeList from "../components/SideAnimeList.vue";
 import Loading from "../components/Loading.vue";
@@ -7,50 +7,88 @@ import axios from "axios";
 import { Watch } from "../types/Anime";
 
 export default defineComponent({
-    name: "Home",
+    name: "Watch",
     components: { SideAnimeList, Loading },
     data() {
         return {
-            selectedAnime: [] as Watch[],
+            animeDetails: [] as Watch[],
             isLoading: false as boolean,
         };
     },
     async mounted() {
         this.isLoading = true;
         await axios
-            .get<Watch[]>("https://gogoanime.consumet.stream/anime-details/naruto")
+            .get("https://gogoanime.consumet.stream/anime-details/naruto")
             .then((response) => {
                 console.log(response.data);
-                this.selectedAnime = response.data;
+                this.animeDetails = response.data;
                 this.isLoading = false;
             })
             .catch((err) => {
                 console.log(err);
             });
     },
+    // setup() {
+
+    //     const animeDetails = ref([] as Watch[])
+    //     const isLoading = ref<boolean>(false)
+    //     const fetchAnimeDetails = async () => {
+    //         isLoading.value = true
+    //         await axios
+    //             .get("https://gogoanime.consumet.stream/anime-details/naruto")
+    //             .then((response) => {
+
+    //                 const { data } = response.data
+
+    //                 animeDetails.value = data
+    //                 isLoading.value = false
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //             });
+    //     }
+
+
+    //     onMounted(fetchAnimeDetails)
+
+
+    //     return { isLoading, animeDetails }
+
+
+    // }
 });
 </script>
 
 <template>
     <div class="w-full md:p-5 py-1 flex gap-5 justify-between ">
-        <!-- animes list -->
-        <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
-            <header class="bg-[red] w-full">
-                <h3 class="font-semibold text-white px-5 py-2">WATCH ANIME - Naruto
+    <!-- animes list -->
+    <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
+        <header class="bg-[red] w-full">
+            <h3 class="font-semibold text-white px-5 py-2">WATCH ANIME - Naruto
 
-                </h3>
-            </header>
+            </h3>
+        </header>
 
-            <div class="w-full p-5">
-                <div class="w-full flex md:flex-row flex-col gap-5 ">
-                    <!-- image container -->
-                    <div class="w-[350px] h-[380px] bg-white">
+        <div class="w-full md:p-5">
+            <!-- image container -->
+            <div class="w-full min-h-[282px] h-[285px] md:min-h-[550px] lg:min-h-[580px] overflow-hidden">
+                <iframe class="w-full h-full"
+                    src="https://anihdplay.com/streaming.php?id=MjU2MTU=&title=Naruto+Episode+220&typesub=SUB"
+                    allowfullscreen="true" frameborder="0"></iframe>
+            </div>
 
-                        <img class="ww-full h-full object-cover" src="https://gogocdn.net/images/anime/N/naruto.jpg" alt="">
-                    </div>
+            <div class="w-full p-5 ">
+                <!-- anime title -->
+                <p class="text-white font-semibold text-base">
+                    Naruto
 
-                    <!-- anime details -->
-                    <div class="w-full">
+                </p>
+            </div>
+
+
+
+            <!-- anime details -->
+            <!-- <div class="w-full">
                         <h2 class="text-xl text-white font-bold">
                             Naruto
                         </h2>
@@ -65,71 +103,70 @@ export default defineComponent({
                             the attack. He grew up in the village and was mistreated badly by everyone in town.\n\nWith
                             his loud mouth and careless attitude, he is determined to become the greatest ninja, hokage,
                             in his village. Along with friends, and hope, Naruto trains to become a better ninja than
-                            expected.</p>
+                                                        expected.</p>
 
-                        <ul>
-                            <li class="flex gap-2 items-start">
-                                <span class="text-white/80  font-semibold text-[15px]">Genres:
-                                </span>
-                                <span class="flex flex-wrap gap-x-1 ">
-                                    <p class="text-[red] text-sm">
-                                        Action,
-                                    </p>
-                                    <p class="text-[red] text-sm">
-                                        Comedy,
-                                    </p>
-                                    <p class="text-[red] text-sm">
-                                        Martial,
-                                    </p>
-                                    <p class="text-[red] text-sm">
-                                        Arts,
-                                    </p>
-                                    <p class="text-[red] text-sm">
-                                        Shounen,
-                                    </p>
-                                    <p class="text-[red] text-sm">
-                                        Super Power,
-                                    </p>
-                                </span>
-
-
-                            </li>
-                            <li class="flex gap-2 items-end">
-                                <span class="text-white/80  font-semibold text-[15px]">Type:
-                                </span>
-                                <p class="text-[red] text-sm">
-                                    TV Series
-                                </p>
-                            </li>
-                            <li class="flex gap-2 items-end">
-                                <span class="text-white/80  font-semibold text-[15px]">Status:
-                                </span>
-                                <p class="text-[red] text-sm">
-                                    Completed
-                                </p>
-                            </li>
-                            <li class="flex gap-2 items-end">
-                                <span class="text-white/80  font-semibold text-[15px]">Episodes:
-                                </span>
-                                <p class="text-[red] text-sm">
-                                    220
-                                </p>
-                            </li>
-                            <li class="flex gap-2 items-end">
-                                <span class="text-white/80  font-semibold text-[15px]">Released Date:
-                                </span>
-                                <p class="text-[red] text-sm">
-                                    2002
-                                </p>
-                            </li>
-                        </ul>
+                                                                                                                    <ul>
+                                                                                                                        <li class="flex gap-2 items-start">
+                                                                                                                            <span class="text-white/80  font-semibold text-[15px]">Genres:
+                                                                                                                                    </span>
+                                                                                                                                    <span class="flex flex-wrap gap-x-1 ">
+                                                                                                                                                <p class="text-[red] text-sm">
+                                                                                                                                                    Action,
+                                                                                                                                                </p>
+                                                                                                                                                <p class="text-[red] text-sm">
+                                                                                                                                                    Comedy,
+                                                                                                                                                </p>
+                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                        Martial,
+                                                                                                                                                    </p>
+                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                        Arts,
+                                                                                                                                                    </p>
+                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                        Shounen,
+                                                                                                                                                    </p>
+                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                            Super Power,
+                                                                                                                                                        </p>
+                                                                                                                                                    </span>
 
 
-                    </div>
-                </div>
+                                                                                                                                                </li>
+                                                                                                                                                                                        <li class="flex gap-2 items-end">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Type:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        TV Series
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="flex gap-2 items-end">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Status:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Completed
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="flex gap-2 items-end">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Episodes:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        220
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="flex gap-2 items-end">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Released Date:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        2002
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
             </div>
         </div>
-
         <!-- side anime list -->
         <SideAnimeList />
     </div>

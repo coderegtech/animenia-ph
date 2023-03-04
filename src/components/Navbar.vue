@@ -59,7 +59,7 @@ export default defineComponent({
 
 <template>
     <div :class="{ 'left-0': active }"
-        class=" absolute top-[83px] -left-full duration-300 w-full h-[100vh] bg-black/90 lg:hidden p-5 navbar overflow-y-auto scroll-my-20">
+        class=" absolute top-[75px] -left-full duration-300 w-full  bg-black/90 lg:hidden p-5 navbar overflow-y-auto scroll-my-20 z-50">
 
         <!-- search bar -->
         <div class="relative pb-5">
@@ -126,8 +126,8 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.navbar.active {
-    left: 0;
+.navbar {
+    height: calc(100vh - 80px);
 }
 
 .navbar::-webkit-scrollbar {
