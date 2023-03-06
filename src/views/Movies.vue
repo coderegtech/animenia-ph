@@ -1,30 +1,43 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import SideAnimeList from "../components/SideAnimeList.vue"
-import Loading from '../components/Loading.vue'
-import axios from 'axios'
-import { Movies } from "../types/Anime"
+import axios from 'axios';
+import Loading from '../components/Loading.vue';
+import Pagination from "../components/Pagination.vue";
+import SideAnimeList from "../components/SideAnimeList.vue";
+import { Movies } from "../types/Anime";
 
 export default defineComponent({
-    components: { SideAnimeList, Loading },
+    components: { SideAnimeList, Loading, Pagination },
     data() {
         return {
             animeList: [] as Movies[],
-            isLoading: false as boolean
+            isLoading: false as boolean,
+            page: 1 as number
         }
     }, async mounted() {
-        this.isLoading = true
-        await axios.get<Movies[]>("https://gogoanime.consumet.stream/anime-movies").then(response => {
-            console.log(response.data);
-            this.animeList.push(...response.data)
-            this.isLoading = false
+        this.fetchAnimes()
+    }, methods: {
+        async fetchAnimes() {
+            this.isLoading = true
+            await axios.get<Movies[]>(`https://gogoanime.consumet.stream/anime-movies?page=${this.page}`).then(response => {
+                console.log(response.data);
+                this.animeList = response.data
+                this.isLoading = false
 
-        }).catch(err => {
-            console.log(err);
+            }).catch(err => {
+                console.log(err);
 
-        })
+            })
+        },
+
+        changePage(pageNum: number) {
+            this.page = pageNum
+            this.fetchAnimes()
+        }
+
     }
+
 
 
 })
@@ -36,13 +49,15 @@ export default defineComponent({
     <div class="w-full md:p-5 py-1 flex gap-5 justify-between">
         <!-- animes list -->
         <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
-            <header class="bg-[red] w-full">
-                <h3 class="font-semibold text-white px-5 py-2">ANIME MOVIES</h3>
+            <header class="bg-[red] w-full flex justify-between items-center">
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">ANIME MOVIES</h3>
+
+                <Pagination :page="page" :change-page="changePage" />
             </header>
 
-            <div class="w-full p-5 flex gap-5 flex-wrap justify-center">
+            <Loading v-if="isLoading" />
 
-                <Loading v-if="isLoading" />
+            <div class="w-full p-5 flex gap-5 flex-wrap justify-center">
 
                 <!-- anime list items -->
                 <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96">
@@ -55,7 +70,7 @@ export default defineComponent({
                     <div class="text-center p-3">
                         <!-- anime title -->
                         <p class="text-[15px] md:text-base font-semibold text-white hover:text-[red] cursor-pointer">{{
-                             anime.animeTitle.substring(0, 30) + "..."
+                            anime.animeTitle.substring(0, 30) + "..."
                         }}</p>
 
 

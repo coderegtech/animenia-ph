@@ -1,11 +1,11 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    // {
-    //     path: '*',
-    //     name: 'error-page',
-    //     component: () => import("./views/ErrorPage.vue")
-    // },
+    { 
+        path: '/:pathMatch(.*)*', 
+        name: 'NotFound', 
+        component: () => import("./views/ErrorPage.vue") 
+    },
     {
         path: '/',
         name: 'home',
@@ -15,6 +15,11 @@ const routes = [
         path: '/anime-list',
         name: 'anime-list',
         component: () => import("./views/AnimeList.vue")
+    },
+    {
+        path: '/new-season',
+        name: 'new season',
+        component: () => import("./views/NewSeason.vue")
     },
     {
         path: '/anime-movies',
@@ -45,7 +50,7 @@ const routes = [
 
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
 

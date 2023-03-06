@@ -1,9 +1,9 @@
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent } from "vue";
 
-import SideAnimeList from "../components/SideAnimeList.vue";
-import Loading from "../components/Loading.vue";
 import axios from "axios";
+import Loading from "../components/Loading.vue";
+import SideAnimeList from "../components/SideAnimeList.vue";
 import { Watch } from "../types/Anime";
 
 export default defineComponent({
@@ -28,145 +28,106 @@ export default defineComponent({
                 console.log(err);
             });
     },
-    // setup() {
 
-    //     const animeDetails = ref([] as Watch[])
-    //     const isLoading = ref<boolean>(false)
-    //     const fetchAnimeDetails = async () => {
-    //         isLoading.value = true
-    //         await axios
-    //             .get("https://gogoanime.consumet.stream/anime-details/naruto")
-    //             .then((response) => {
-
-    //                 const { data } = response.data
-
-    //                 animeDetails.value = data
-    //                 isLoading.value = false
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     }
-
-
-    //     onMounted(fetchAnimeDetails)
-
-
-    //     return { isLoading, animeDetails }
-
-
-    // }
 });
 </script>
 
 <template>
-    <div class="w-full md:p-5 py-1 flex gap-5 justify-between ">
-    <!-- animes list -->
-    <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
-        <header class="bg-[red] w-full">
-            <h3 class="font-semibold text-white px-5 py-2">WATCH ANIME - Naruto
+    <div class="w-full md:p-5 py-1 flex gap-5 justify-between">
+        <!-- animes list -->
+        <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
+            <header class="bg-[red] w-full">
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">WATCH ANIME - Naruto</h3>
+            </header>
 
-            </h3>
-        </header>
+            <div class="w-full ">
+                <!-- image container -->
+                <div class="w-full h-full md:p-5">
+                    <iframe class="w-full h-full"
+                        src="https://anihdplay.com/streaming.php?id=MjU2MTU=&title=Naruto+Episode+220&typesub=SUB"
+                        allowfullscreen="true" frameborder="0"></iframe>
+                </div>
 
-        <div class="w-full md:p-5">
-            <!-- image container -->
-            <div class="w-full min-h-[282px] h-[285px] md:min-h-[550px] lg:min-h-[580px] overflow-hidden">
-                <iframe class="w-full h-full"
-                    src="https://anihdplay.com/streaming.php?id=MjU2MTU=&title=Naruto+Episode+220&typesub=SUB"
-                    allowfullscreen="true" frameborder="0"></iframe>
-            </div>
+                <!-- anime details -->
+                <div class="w-full p-5">
+                    <h2 class="text-xl text-white font-bold">
+                        Naruto - naruto season 1 - episode 1
+                    </h2>
+                    <span class="text-white/90"> ナルト </span>
+                    <p class="text-white/80 py-1">In a world of mystical and powerful enemies lurk in every nation,
+                        a
+                        legendary Nine-Tailed
+                        Demon Fox attacked the ninja village Konoha, killing many innocent people. In response of a
+                        desperate measure from the people, the leader of the village – the Fourth Hokage –
+                        sacrificed his life to defeat the demon fox. By sacrificing his own life, he sealed the
+                        demon fox into a very young boy named, Naruto Uzumaki. Naruto has lost his parents during
+                        the attack. He grew up in the village and was mistreated badly by everyone in town.\n\nWith
+                        his loud mouth and careless attitude, he is determined to become the greatest ninja, hokage,
+                        in his village. Along with friends, and hope, Naruto trains to become a better ninja than
+                        expected.</p>
 
-            <div class="w-full p-5 ">
-                <!-- anime title -->
-                <p class="text-white font-semibold text-base">
-                    Naruto
-
-                </p>
-            </div>
-
-
-
-            <!-- anime details -->
-            <!-- <div class="w-full">
-                        <h2 class="text-xl text-white font-bold">
-                            Naruto
-                        </h2>
-                        <span class="text-white/90"> ナルト </span>
-                        <p class="text-white/80 py-1">In a world of mystical and powerful enemies lurk in every nation,
-                            a
-                            legendary Nine-Tailed
-                            Demon Fox attacked the ninja village Konoha, killing many innocent people. In response of a
-                            desperate measure from the people, the leader of the village – the Fourth Hokage –
-                            sacrificed his life to defeat the demon fox. By sacrificing his own life, he sealed the
-                            demon fox into a very young boy named, Naruto Uzumaki. Naruto has lost his parents during
-                            the attack. He grew up in the village and was mistreated badly by everyone in town.\n\nWith
-                            his loud mouth and careless attitude, he is determined to become the greatest ninja, hokage,
-                            in his village. Along with friends, and hope, Naruto trains to become a better ninja than
-                                                        expected.</p>
-
-                                                                                                                    <ul>
-                                                                                                                        <li class="flex gap-2 items-start">
-                                                                                                                            <span class="text-white/80  font-semibold text-[15px]">Genres:
-                                                                                                                                    </span>
-                                                                                                                                    <span class="flex flex-wrap gap-x-1 ">
-                                                                                                                                                <p class="text-[red] text-sm">
-                                                                                                                                                    Action,
-                                                                                                                                                </p>
-                                                                                                                                                <p class="text-[red] text-sm">
-                                                                                                                                                    Comedy,
-                                                                                                                                                </p>
-                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                        Martial,
-                                                                                                                                                    </p>
-                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                        Arts,
-                                                                                                                                                    </p>
-                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                        Shounen,
-                                                                                                                                                    </p>
-                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                            Super Power,
-                                                                                                                                                        </p>
-                                                                                                                                                    </span>
+                    <ul>
+                        <li class="flex gap-2 items-start">
+                            <span class="text-white/80  font-semibold text-[15px]">Genres:
+                            </span>
+                            <span class="flex flex-wrap gap-x-1 ">
+                                <p class="text-[red] text-sm">
+                                    Action,
+                                </p>
+                                <p class="text-[red] text-sm">
+                                    Comedy,
+                                </p>
+                                <p class="text-[red] text-sm">
+                                    Martial,
+                                </p>
+                                <p class="text-[red] text-sm">
+                                    Arts,
+                                </p>
+                                <p class="text-[red] text-sm">
+                                    Shounen,
+                                </p>
+                                <p class="text-[red] text-sm">
+                                    Super Power,
+                                </p>
+                            </span>
 
 
-                                                                                                                                                </li>
-                                                                                                                                                                                        <li class="flex gap-2 items-end">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Type:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        TV Series
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="flex gap-2 items-end">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Status:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Completed
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="flex gap-2 items-end">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Episodes:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        220
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="flex gap-2 items-end">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <span class="text-white/80  font-semibold text-[15px]">Released Date:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="text-[red] text-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        2002
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
+                        </li>
+                        <li class="flex gap-2 items-end">
+                            <span class="text-white/80  font-semibold text-[15px]">Type:
+                            </span>
+                            <p class="text-[red] text-sm">
+                                TV Series
+                            </p>
+                        </li>
+                        <li class="flex gap-2 items-end">
+                            <span class="text-white/80  font-semibold text-[15px]">Status:
+                            </span>
+                            <p class="text-[red] text-sm">
+                                Completed
+                            </p>
+                        </li>
+                        <li class="flex gap-2 items-end">
+                            <span class="text-white/80  font-semibold text-[15px]">Episodes:
+                            </span>
+                            <p class="text-[red] text-sm">
+                                220
+                            </p>
+                        </li>
+                        <li class="flex gap-2 items-end">
+                            <span class="text-white/80  font-semibold text-[15px]">Released Date:
+                            </span>
+                            <p class="text-[red] text-sm">
+                                2002
+                            </p>
+                        </li>
+                    </ul>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                </div>
             </div>
         </div>
+
+
         <!-- side anime list -->
         <SideAnimeList />
     </div>

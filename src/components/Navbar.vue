@@ -4,11 +4,10 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 import { Search } from '../types/Anime';
 import Loading from './Loading.vue';
-import GenresList from './GenresList.vue';
 
 export default defineComponent({
     name: "Navbar",
-    components: { Loading, GenresList },
+    components: { Loading },
     props: {
         active: {
             required: true,
@@ -96,7 +95,8 @@ export default defineComponent({
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link to="/">HOME</router-link>
             </li>
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1">ANIME LIST</li>
-            <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1">NEW SEASON</li>
+            <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link to="/new-season">NEW
+                    SEASON</router-link></li>
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link
                     to="/anime-movies">MOVIES</router-link> </li>
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link

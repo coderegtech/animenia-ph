@@ -1,29 +1,42 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-
-import SideAnimeList from "../components/SideAnimeList.vue"
-import Loading from '../components/Loading.vue'
-import axios from 'axios'
-import { Genres } from "../types/Anime"
-
+import axios from 'axios';
+import { defineComponent, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import Loading from '../components/Loading.vue';
+import SideAnimeList from "../components/SideAnimeList.vue";
+import { Genres } from "../types/Anime";
 export default defineComponent({
-    components: { SideAnimeList, Loading },
-    data() {
-        return {
-            animeList: [] as Genres[],
-            isLoading: false as boolean,
-            genre: this.$route.params.genre
-        }
-    }, async mounted() {
-        this.isLoading = true
-        await axios.get<Genres[]>(`https://gogoanime.consumet.stream/genre/${this.genre}`).then(response => {
-            console.log(response);
-            this.animeList = response.data
-            this.isLoading = false
-        }).catch(err => {
-            console.log(err);
+    components: { SideAnimeList, Loading, },
+    setup() {
+        const isLoading = ref<boolean>(false)
+        const animeList = ref<Genres[]>([])
+        const genre = ref<string>("")
+        const router = useRoute()
 
-        })
+
+        const fetchAnime = async () => {
+            isLoading.value = true
+            await axios.get<Genres[]>(`https://gogoanime.consumet.stream/genre/${!genre.value ? router.params.genre : genre.value}`).then(response => {
+
+                animeList.value = response.data
+                isLoading.value = false
+            }).catch(err => {
+                console.log(err);
+
+            })
+        }
+
+        // Change different genres
+        const changeGenre = (selectedGenre: string) => {
+            genre.value = selectedGenre
+            fetchAnime()
+        }
+
+        onMounted(fetchAnime)
+
+
+        return { isLoading, animeList, genre, changeGenre }
+
     }
 
 
@@ -37,15 +50,19 @@ export default defineComponent({
         <!-- animes list -->
         <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
             <header class="bg-[red] w-full">
-                <h3 class="font-semibold text-white px-5 py-2">ANIME GENRE {{ genre.toString().toUpperCase() }}</h3>
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">ANIME GENRE {{ genre.toUpperCase() }}
+                </h3>
             </header>
 
             <div class="w-full p-5 flex gap-5 flex-wrap justify-center">
 
                 <Loading v-if="isLoading" />
 
+                <p class="text-white text-center" v-else-if="!animeList.length">Not found</p>
+
                 <!-- anime list items -->
-                <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96">
+                <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96"
+                    v-else>
                     <!-- image box -->
                     <div class="w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
                         @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
@@ -70,7 +87,7 @@ export default defineComponent({
         </div>
 
         <!-- side anime list -->
-        <SideAnimeList />
+        <SideAnimeList :change-genre="changeGenre" />
 
     </div>
 </template>

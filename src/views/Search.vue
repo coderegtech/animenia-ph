@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import SideAnimeList from "../components/SideAnimeList.vue"
-import Loading from '../components/Loading.vue'
-import axios from 'axios'
-import { Search } from "../types/Anime"
+import axios from 'axios';
+import Loading from '../components/Loading.vue';
+import SideAnimeList from "../components/SideAnimeList.vue";
+import { Search } from "../types/Anime";
 
 export default defineComponent({
     components: { SideAnimeList, Loading },
@@ -38,7 +38,7 @@ export default defineComponent({
         <!-- animes list -->
         <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
             <header class="bg-[red] w-full">
-                <h3 class="font-semibold text-white px-5 py-2">RESULT ANIME SEARCH</h3>
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">RESULT ANIME SEARCH</h3>
             </header>
 
             <div class="w-full p-5 flex gap-5 flex-wrap justify-center">

@@ -1,6 +1,6 @@
 <script lang="ts" >
-import { defineComponent } from 'vue';
 import axios from 'axios';
+import { defineComponent } from 'vue';
 import { Search } from '../types/Anime';
 import Loading from './Loading.vue';
 import Navbar from "./Navbar.vue";
@@ -48,7 +48,7 @@ export default defineComponent({
 
 <template>
     <header
-        class="fixed top-0 left-1/2 -translate-x-1/2 max-w-[1440px] w-full mx-auto  min-h-[60px] p-5 lg:p-8 bg-black border-b-4 border-[red] flex gap-5 justify-between items-center z-50">
+        class="fixed top-0 left-1/2 -translate-x-1/2 max-w-[2800px] w-full mx-auto  min-h-[60px] p-5 lg:py-8 bg-black border-b-4 border-[red] flex gap-5 justify-between items-center z-50">
 
 
 
@@ -60,14 +60,14 @@ export default defineComponent({
         <!-- navbar -->
         <ul class="text-white lg:flex gap-5 hidden">
             <li class="cursor-pointer hover:text-[red]"><router-link to="/">HOME</router-link></li>
-            <li class="cursor-pointer hover:text-[red]">ANIME LIST</li>
-            <li class="cursor-pointer hover:text-[red]">NEW SEASON</li>
+            <li class="cursor-pointer hover:text-[red]"> ANIME LIST</li>
+            <li class="cursor-pointer hover:text-[red]"><router-link to="/new-season">NEW SEASON</router-link></li>
             <li class="cursor-pointer hover:text-[red]"><router-link to="/anime-movies">MOVIES</router-link> </li>
             <li class="cursor-pointer hover:text-[red]"><router-link to="/popular">POPULAR</router-link> </li>
         </ul>
 
         <!-- search bar -->
-        <div class="relative hidden lg:block">
+        <div class="xl:w-96 relative hidden lg:block">
             <form @submit.prevent="handleSearch()" class=" bg-white  rounded-lg flex overflow-hidden">
 
                 <input class="w-full bg-transparent focus:outline-none p-2 px-3" type="text" placeholder="Search Anime..."

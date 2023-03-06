@@ -1,10 +1,11 @@
 <script lang="ts">
-import { defineComponent } from "vue";
 import axios from "axios";
+import { defineComponent } from "vue";
 import { TopAiring } from "../types/Anime";
-import GenresList from "./GenresList.vue";
+
 export default defineComponent({
-  components: { GenresList },
+  props: ['changeGenre'],
+  components: {},
   data() {
     return {
       topAiring: [] as TopAiring[],
@@ -32,30 +33,54 @@ export default defineComponent({
   },
   methods: {
     selectedGenre(genre: string) {
-      this.$router.push({ name: 'anime-genres', params: { 'genre': genre } })
+      this.$router.push({ name: "anime-genres", params: { 'genre': genre } });
+      this.changeGenre(genre)
     }
   }
 });
 </script>
 
 <template>
-  <div class="hidden lg:flex flex-col gap-5 min-w-[300px] h-full">
+  <div class=" hidden lg:flex flex-col gap-5 min-w-[300px] h-full">
     <div class="bg-black rounded-xl overflow-hidden">
       <header class="bg-[red] w-full">
         <h3 class="font-semibold text-white px-3 py-2">TOP ANIME</h3>
       </header>
 
-      <ul class="p-5">
-        <li class="py-2" v-for="(anime, index) in topAiring" :key="anime.animeId">
-          <p class="text-white hover:text-[red] text-base cursor-pointer">
-            {{ index + 1 }}. {{ anime.animeTitle.substring(0, 50) }}
-          </p>
-          <span class="text-white/80 text-sm px-3">{{ anime.latestEp }}</span>
+      <ul class="p-5 h-full overflow-y-auto">
+        <li class="py-2 flex gap-3 hover:scale-105 duration-200" v-for="(anime, index) in topAiring" :key="anime.animeId"
+          @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
+          <img class="min-w-[90px] h-[70px] object-cover rounded-md " :src="anime.animeImg" alt="">
+          <div class="">
+            <p class="text-white hover:text-[red] text-base cursor-pointer">
+              {{ anime.animeTitle.substring(0, 50) }}
+            </p>
+            <span class="text-white/80 text-sm">{{ anime.latestEp }}</span>
+          </div>
+
         </li>
       </ul>
     </div>
 
-    <GenresList />
+    <div class="bg-black rounded-xl overflow-hidden">
+      <header class="bg-[red] w-full">
+        <h3 class="font-semibold text-white px-3 py-2">GENRES</h3>
+      </header>
+
+      <ul class="p-5">
+        <li class="grid grid-cols-2">
+          <p @click="selectedGenre(genre)" v-for="(genre, index) in genres[0]" :key="index"
+            class="text-white hover:text-[red] text-[15px] cursor-pointer p-1">
+            {{ genre.replace(genre[0], (c) => c.toUpperCase()) }}
+          </p>
+
+          <p @click="selectedGenre(genre)" v-for="(genre, index) in genres[1]" :key="index"
+            class="text-white hover:text-[red] text-[15px] cursor-pointer p-1">
+            {{ genre.replace(genre[0], (c) => c.toUpperCase()) }}
+          </p>
+        </li>
+      </ul>
+    </div>
 
   </div>
 </template>

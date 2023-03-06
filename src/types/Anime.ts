@@ -26,6 +26,13 @@ export interface Popular {
     animeUrl: string
 }
 
+export interface NewSeason {
+    animeId: string,
+    animeTitle: string,
+    animeImg: string,
+    releasedDate: string,
+    animeUrl: string
+}
 
 export interface Movies {
     animeId: string,

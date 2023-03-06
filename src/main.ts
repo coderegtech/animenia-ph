@@ -1,12 +1,12 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-import router from './routes'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './routes';
+import './style.css';
 
-import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaFlag, RiZhihuFill, IoSearch } from "oh-vue-icons/icons"
+import { addIcons, OhVueIcon } from "oh-vue-icons";
+import { BiArrowUpCircleFill, IoSearch } from "oh-vue-icons/icons";
 
-addIcons(FaFlag, RiZhihuFill, IoSearch);
+addIcons(IoSearch, BiArrowUpCircleFill);
 
 const app = createApp(App)
 
