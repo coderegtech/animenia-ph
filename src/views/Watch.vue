@@ -4,30 +4,71 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import Loading from "../components/Loading.vue";
 import SideAnimeList from "../components/SideAnimeList.vue";
-import { Watch } from "../types/Anime";
 
 export default defineComponent({
     name: "Watch",
     components: { SideAnimeList, Loading },
     data() {
         return {
-            animeDetails: [] as Watch[],
+            animeDetails: {
+                animeTitle: "",
+                type: "",
+                releasedDate: "",
+                status: "",
+                animeImg: "",
+                synopsis: "",
+                otherNames: "",
+                genres: [],
+                episodesList: [
+                    {
+                        episodeId: "",
+                        episodeNum: "",
+                        episodeUrl: ""
+                    }
+                ]
+
+            },
+            watchAnime: {
+                referer: ""
+            },
             isLoading: false as boolean,
         };
     },
-    async mounted() {
-        this.isLoading = true;
-        await axios
-            .get("https://gogoanime.consumet.stream/anime-details/naruto")
-            .then((response) => {
-                console.log(response.data);
-                this.animeDetails = response.data;
-                this.isLoading = false;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    },
+    mounted() {
+        const fetchAnimeDetails = async () => {
+            this.isLoading = true;
+            await axios
+                .get(`https://gogoanime.consumet.stream/anime-details/${this.$route.params.episode}`)
+                .then((response) => {
+                    console.log(response.data)
+                    this.animeDetails = { ...response.data };
+                    this.isLoading = false;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+
+        // const fetchWatchAnime = async () => {
+        //     this.isLoading = true;
+        //     await axios
+        //         .get(`https://gogoanime.consumet.stream/vidcdn/watch/${this.animeDetails.episodesList[0].episodeId}`)
+        //         .then((response) => {
+
+        //             this.watchAnime.referer = { ...response.data };
+        //             this.isLoading = false;
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         });
+        // }
+
+        fetchAnimeDetails()
+
+
+    }, methods: {
+
+    }
 
 });
 </script>
@@ -37,58 +78,34 @@ export default defineComponent({
         <!-- animes list -->
         <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
             <header class="bg-[red] w-full">
-                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">WATCH ANIME - Naruto</h3>
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">WATCH ANIME - {{ animeDetails.animeTitle
+                }}</h3>
             </header>
 
             <div class="w-full ">
                 <!-- image container -->
                 <div class="w-full h-full md:p-5">
-                    <iframe class="w-full h-full"
-                        src="https://anihdplay.com/streaming.php?id=MjU2MTU=&title=Naruto+Episode+220&typesub=SUB"
-                        allowfullscreen="true" frameborder="0"></iframe>
+                    <img class="w-full h-[80vh] object-cover" :src="animeDetails.animeImg" alt="">
+                    <!-- <iframe class="w-full h-full" :src="watchAnime.referer" allowfullscreen="true" frameborder="0"></iframe> -->
                 </div>
 
                 <!-- anime details -->
-                <div class="w-full p-5">
+                <div class="w-full px-5 pb-5">
                     <h2 class="text-xl text-white font-bold">
-                        Naruto - naruto season 1 - episode 1
+                        {{ animeDetails.animeTitle }}
                     </h2>
-                    <span class="text-white/90"> ナルト </span>
-                    <p class="text-white/80 py-1">In a world of mystical and powerful enemies lurk in every nation,
-                        a
-                        legendary Nine-Tailed
-                        Demon Fox attacked the ninja village Konoha, killing many innocent people. In response of a
-                        desperate measure from the people, the leader of the village – the Fourth Hokage –
-                        sacrificed his life to defeat the demon fox. By sacrificing his own life, he sealed the
-                        demon fox into a very young boy named, Naruto Uzumaki. Naruto has lost his parents during
-                        the attack. He grew up in the village and was mistreated badly by everyone in town.\n\nWith
-                        his loud mouth and careless attitude, he is determined to become the greatest ninja, hokage,
-                        in his village. Along with friends, and hope, Naruto trains to become a better ninja than
-                        expected.</p>
+                    <span class="text-white/90"> {{ animeDetails.otherNames }} </span>
+                    <p class="text-white/80 py-1">{{ animeDetails.synopsis }}</p>
 
                     <ul>
                         <li class="flex gap-2 items-start">
                             <span class="text-white/80  font-semibold text-[15px]">Genres:
                             </span>
-                            <span class="flex flex-wrap gap-x-1 ">
+                            <span class="flex flex-wrap gap-x-1 " v-for="genres in animeDetails.genres">
                                 <p class="text-[red] text-sm">
-                                    Action,
+                                    {{ genres }},
                                 </p>
-                                <p class="text-[red] text-sm">
-                                    Comedy,
-                                </p>
-                                <p class="text-[red] text-sm">
-                                    Martial,
-                                </p>
-                                <p class="text-[red] text-sm">
-                                    Arts,
-                                </p>
-                                <p class="text-[red] text-sm">
-                                    Shounen,
-                                </p>
-                                <p class="text-[red] text-sm">
-                                    Super Power,
-                                </p>
+
                             </span>
 
 

@@ -18,7 +18,7 @@ const routes = [
     },
     {
         path: '/new-season',
-        name: 'new season',
+        name: 'new-season',
         component: () => import("./views/NewSeason.vue")
     },
     {

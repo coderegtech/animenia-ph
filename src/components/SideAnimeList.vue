@@ -2,10 +2,11 @@
 import axios from "axios";
 import { defineComponent } from "vue";
 import { TopAiring } from "../types/Anime";
-
+import Loading from "./Loading.vue";
+import Pagination from "./Pagination.vue";
 export default defineComponent({
   props: ['changeGenre'],
-  components: {},
+  components: { Loading, Pagination },
   data() {
     return {
       topAiring: [] as TopAiring[],
@@ -16,38 +17,53 @@ export default defineComponent({
         "romance", "samurai", "school", "sci-fi", "seinen", "shoujo", "shoujo-ai", "shounen", "shounen-ai", "slice-of-Life", "space",
         "sports", "super-power", "supernatural", "suspense", "thriller", "vampire", "yaoi", "yuri",]
       ],
+      page: 1 as number
     };
   },
   async mounted() {
-    this.isLoading = true;
-    await axios
-      .get<TopAiring[]>("https://gogoanime.consumet.stream/top-airing")
-      .then((response) => {
-        console.log(response.data);
-        this.topAiring.push(...response.data);
-        this.isLoading = false;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.fetchAnime()
   },
   methods: {
+    async fetchAnime() {
+      this.isLoading = true;
+      await axios
+        .get<TopAiring[]>(`https://gogoanime.consumet.stream/top-airing?page=${this.page}`)
+        .then((response) => {
+          console.log(response.data);
+          this.topAiring = response.data;
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     selectedGenre(genre: string) {
       this.$router.push({ name: "anime-genres", params: { 'genre': genre } });
       this.changeGenre(genre)
+    },
+    changePage(pageNum: number) {
+      this.page = pageNum
+      this.fetchAnime()
     }
   }
 });
 </script>
 
 <template>
-  <div class=" hidden lg:flex flex-col gap-5 min-w-[300px] h-full">
+  <div class=" hidden lg:flex flex-col gap-5 basis-[550px]">
     <div class="bg-black rounded-xl overflow-hidden">
-      <header class="bg-[red] w-full">
+      <header class="bg-[red] w-full flex justify-between items-center">
+
         <h3 class="font-semibold text-white px-3 py-2">TOP ANIME</h3>
+
+        <Pagination :change-page="changePage" :page="page" :total-page="3" />
       </header>
 
-      <ul class="p-5 h-full overflow-y-auto">
+      <Loading v-if="isLoading" />
+
+
+      <ul class="p-5 h-full">
+
         <li class="py-2 flex gap-3 hover:scale-105 duration-200" v-for="(anime, index) in topAiring" :key="anime.animeId"
           @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
           <img class="min-w-[90px] h-[70px] object-cover rounded-md " :src="anime.animeImg" alt="">

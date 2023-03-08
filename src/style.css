@@ -18,3 +18,9 @@
 body {
   background-color: rgb(0 0 0 / 0.9);
 }
+
+.anime-img:hover > img,
+.anime-img:hover > .play-btn {
+  transform: scale(1.1);
+  opacity: 1;
+}

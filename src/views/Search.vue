@@ -14,17 +14,31 @@ export default defineComponent({
             isLoading: false as boolean,
             animeName: this.$route.params.name
         }
-    }, async mounted() {
-        this.isLoading = true
-        await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${this.animeName}`).then(response => {
+    }, computed: {
+        filteredAnime() {
+            return this.fetchAnime()
+        }
+    }, watch: {
+        '$route.params': {
+            handler() {
+                this.fetchAnime()
+            }, immediate: true
+        }
+    },
 
-            this.animeList.push(...response.data)
-            this.isLoading = false
+    methods: {
+        async fetchAnime() {
+            this.isLoading = true
+            await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${this.animeName}`).then(response => {
 
-        }).catch(err => {
-            console.log(err);
+                this.animeList = response.data
+                this.isLoading = false
 
-        })
+            }).catch(err => {
+                console.log(err);
+
+            })
+        }
     }
 
 
@@ -51,9 +65,13 @@ export default defineComponent({
                 <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96"
                     v-else>
                     <!-- image box -->
-                    <div class="w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
+                    <div class=" anime-img duration-300 relative w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
                         @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
-                        <img class="w-full h-full object-cover hover:scale-110 duration-300" :src="anime.animeImg" alt="">
+                        <img class="  w-full h-full object-cover duration-300" :src="anime.animeImg" alt="">
+
+                        <span
+                            class="play-btn opacity-0 duration-300 absolute top-0 left-0 w-full h-full bg-black/50 grid place-items-center cursor-pointer"><v-icon
+                                name="hi-solid-play" scale="2.5" color="red"></v-icon></span>
                     </div>
 
                     <div class="text-center p-3">
