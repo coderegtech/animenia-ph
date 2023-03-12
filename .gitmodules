@@ -1,0 +1,3 @@
+[submodule "gogoanime-api"]
+	path = gogoanime-api
+	url = https://github.com/riimuru/gogoanime-api.git
