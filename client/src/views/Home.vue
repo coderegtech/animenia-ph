@@ -24,7 +24,7 @@ export default defineComponent({
     }, methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<Anime[]>(`http://localhost:3000/recent-release?page=${this.page}`).then(response => {
+            await axios.get<Anime[]>(`http://0.0.0.0:3000/recent-release?page=${this.page}`).then(response => {
                 console.log(response.data);
                 this.animeList = response.data
                 this.isLoading = false
