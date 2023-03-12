@@ -25,7 +25,7 @@ export default defineComponent({
         }, async searchInput() {
 
             this.isLoading = true
-            await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${this.searchValue}`).then(response => {
+            await axios.get<Search[]>(`http://0.0.0.0:3000/search?keyw=${this.searchValue}`).then(response => {
                 this.isActive = true
                 this.isLoading = false
 

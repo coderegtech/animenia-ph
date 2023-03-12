@@ -4,7 +4,6 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import Loading from "../components/Loading.vue";
 import SideAnimeList from "../components/SideAnimeList.vue";
-
 export default defineComponent({
     name: "Watch",
     components: { SideAnimeList, Loading },
@@ -38,7 +37,7 @@ export default defineComponent({
         const fetchAnimeDetails = async () => {
             this.isLoading = true;
             await axios
-                .get(`https://gogoanime.consumet.stream/anime-details/${this.$route.params.episode}`)
+                .get(`http://0.0.0.0:3000/anime-details/${this.$route.params.episode}`)
                 .then((response) => {
                     console.log(response.data)
                     this.animeDetails = { ...response.data };
