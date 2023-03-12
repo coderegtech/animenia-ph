@@ -17,18 +17,14 @@ export default defineComponent({
             page: 1 as number
         }
     },
-    computed: {
-        AnimeData() {
-            return this.animeList;
-        }
-    },
+
 
     async mounted() {
         this.fetchAnime()
     }, methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<Anime[]>(`https://gogoanime.consumet.stream/recent-release?page=${this.page}`).then(response => {
+            await axios.get<Anime[]>(`http://localhost:3000/recent-release?page=${this.page}`).then(response => {
                 console.log(response.data);
                 this.animeList = response.data
                 this.isLoading = false
@@ -67,7 +63,7 @@ export default defineComponent({
             <div class="relative w-full p-5 flex gap-5 flex-wrap justify-center">
 
                 <!-- anime list items -->
-                <div v-for="anime in AnimeData" :key="anime.episodeId"
+                <div v-for="anime in animeList" :key="anime.episodeId"
                     class=" relative max-w-[130px] md:max-w-[200px] md:max-h-96">
                     <!-- image box -->
                     <div class=" anime-img duration-300 relative w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"

@@ -27,7 +27,7 @@ export default defineComponent({
     async fetchAnime() {
       this.isLoading = true;
       await axios
-        .get<TopAiring[]>(`https://gogoanime.consumet.stream/top-airing?page=${this.page}`)
+        .get<TopAiring[]>(`http://localhost:3000/top-airing?page=${this.page}`)
         .then((response) => {
           console.log(response.data);
           this.topAiring = response.data;
