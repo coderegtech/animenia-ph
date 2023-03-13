@@ -20,7 +20,7 @@ export default defineComponent({
     }, methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<Movies[]>(`http://0.0.0.0:3000/anime-movies?page=${this.page}`).then(response => {
+            await axios.get<Movies[]>(`https://gogoanime.consumet.stream/anime-movies?page=${this.page}`).then(response => {
                 console.log(response.data);
                 this.animeList = response.data
                 this.isLoading = false

@@ -7,7 +7,7 @@ export default defineConfig({
   
   server: {
     proxy: {
-      '/api': 'http://0.0.0.0:3000/'
+      '/api': 'https://gogoanime.consumet.stream/'
     }
   }
 })

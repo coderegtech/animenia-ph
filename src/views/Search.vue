@@ -3,25 +3,34 @@ import { defineComponent } from 'vue';
 
 import axios from 'axios';
 import Loading from '../components/Loading.vue';
-import Pagination from '../components/Pagination.vue';
 import SideAnimeList from "../components/SideAnimeList.vue";
-import { Popular } from "../types/Anime";
+import { Search } from "../types/Anime";
 
 export default defineComponent({
-    components: { SideAnimeList, Loading, Pagination },
+    components: { SideAnimeList, Loading },
     data() {
         return {
-            animeList: [] as Popular[],
+            animeList: [] as Search[],
             isLoading: false as boolean,
-            page: 1 as number
+            animeName: this.$route.params.name
         }
-    }, async mounted() {
-        this.fetchAnime()
-    }, methods: {
+    }, computed: {
+        filteredAnime() {
+            return this.fetchAnime()
+        }
+    }, watch: {
+        '$route.params': {
+            handler() {
+                this.fetchAnime()
+            }, immediate: true
+        }
+    },
+
+    methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<Popular[]>(`http://0.0.0.0:3000/popular?page=${this.page}`).then(response => {
-                console.log(response.data);
+            await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${this.animeName}`).then(response => {
+
                 this.animeList = response.data
                 this.isLoading = false
 
@@ -29,13 +38,7 @@ export default defineComponent({
                 console.log(err);
 
             })
-        },
-
-        changePage(pageNum: number) {
-            this.page = pageNum
-            this.fetchAnime()
         }
-
     }
 
 
@@ -48,19 +51,19 @@ export default defineComponent({
     <div class="w-full md:p-5 py-1 flex gap-5 justify-between">
         <!-- animes list -->
         <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
-            <header class="bg-[red] w-full flex justify-between items-center">
-
-                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">POPULAR ANIME</h3>
-
-                <Pagination :page="page" :change-page="changePage" :total-page="5" />
+            <header class="bg-[red] w-full">
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">RESULT ANIME SEARCH</h3>
             </header>
 
             <div class="w-full p-5 flex gap-5 flex-wrap justify-center">
 
                 <Loading v-if="isLoading" />
 
+                <p class="text-white text-center" v-else-if="!animeList.length">Not found</p>
+
                 <!-- anime list items -->
-                <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96">
+                <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96"
+                    v-else>
                     <!-- image box -->
                     <div class=" anime-img duration-300 relative w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
                         @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
@@ -79,7 +82,7 @@ export default defineComponent({
 
 
                         <!-- episode -->
-                        <span class="text-[13px] md:text-sm text-white/80">Released: {{ anime.releasedDate }}</span>
+                        <span class="text-[13px] md:text-sm text-white/80">{{ anime.status }}</span>
                     </div>
 
                 </div>

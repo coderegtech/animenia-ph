@@ -18,7 +18,7 @@ export default defineComponent({
 
         const fetchAnime = async () => {
             isLoading.value = true
-            await axios.get<Genres[]>(`http://0.0.0.0:3000/genre/${!genre.value ? router.params.genre : genre.value}?page=${page.value}`).then(response => {
+            await axios.get<Genres[]>(`https://gogoanime.consumet.stream/genre/${!genre.value ? router.params.genre : genre.value}?page=${page.value}`).then(response => {
 
                 animeList.value = response.data
                 isLoading.value = false

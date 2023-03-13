@@ -37,7 +37,7 @@ export default defineComponent({
         const fetchAnimeDetails = async () => {
             this.isLoading = true;
             await axios
-                .get(`http://0.0.0.0:3000/anime-details/${this.$route.params.episode}`)
+                .get(`https://gogoanime.consumet.stream/anime-details/${this.$route.params.episode}`)
                 .then((response) => {
                     console.log(response.data)
                     this.animeDetails = { ...response.data };
@@ -84,8 +84,9 @@ export default defineComponent({
             <div class="w-full ">
                 <!-- image container -->
                 <div class="w-full h-full md:p-5">
-                    <img class="w-full h-[80vh] object-cover" :src="animeDetails.animeImg" alt="">
-                    <!-- <iframe class="w-full h-full" :src="watchAnime.referer" allowfullscreen="true" frameborder="0"></iframe> -->
+                    <!-- <img class="w-full h-[80vh] object-cover" :src="animeDetails.animeImg" alt=""> -->
+                    <iframe class="w-full lg:min-h-[500px]  bg-white" :src="watchAnime.referer" allowfullscreen="true"
+                        frameborder="0"></iframe>
                 </div>
 
                 <!-- anime details -->
@@ -93,7 +94,7 @@ export default defineComponent({
                     <h2 class="text-xl text-white font-bold">
                         {{ animeDetails.animeTitle }}
                     </h2>
-                    <span class="text-white/90"> {{ animeDetails.otherNames }} </span>
+                    <!-- <span class="text-white/90"> {{ animeDetails.otherNames }} </span> -->
                     <p class="text-white/80 py-1">{{ animeDetails.synopsis }}</p>
 
                     <ul>
