@@ -65,7 +65,7 @@ export default defineComponent({
       <ul class="p-5 h-full">
 
         <li class="py-2 flex gap-3 hover:scale-105 duration-200" v-for="(anime, index) in topAiring" :key="anime.animeId"
-          @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
+          @click="$router.push({ name: 'anime', params: { 'episode': anime.animeId } })">
           <img class="min-w-[90px] h-[70px] object-cover rounded-md " :src="anime.animeImg" alt="">
           <div class="">
             <p class="text-white hover:text-[red] text-base cursor-pointer">

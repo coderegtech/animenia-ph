@@ -42,9 +42,9 @@ const routes = [
         component: () => import("./views/Genres.vue")
     }, 
     {
-        path: '/watch/:episode',
-        name: 'watch-anime',
-        component: () => import("./views/Watch.vue"), 
+        path: '/:episode',
+        name: 'anime',
+        component: () => import("./views/Anime.vue"), 
     }, 
 ]
 

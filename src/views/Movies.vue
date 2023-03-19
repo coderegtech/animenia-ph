@@ -63,7 +63,7 @@ export default defineComponent({
                 <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96">
                     <!-- image box -->
                     <div class=" anime-img duration-300 relative w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
-                        @click="$router.push({ name: 'watch-anime', params: { 'episode': anime.animeId } })">
+                        @click="$router.push({ name: 'anime', params: { 'episode': anime.animeId } })">
                         <img class="  w-full h-full object-cover duration-300" :src="anime.animeImg" alt="">
 
                         <span
