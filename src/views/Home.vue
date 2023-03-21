@@ -17,9 +17,16 @@ export default defineComponent({
             page: 1 as number
         }
     },
+    watch: {
+        page: {
+            immediate: true,
+            handler() {
+                this.fetchAnime()
+            }
+        }
+    },
 
-
-    async mounted() {
+    mounted() {
         this.fetchAnime()
     }, methods: {
         async fetchAnime() {
@@ -37,7 +44,6 @@ export default defineComponent({
 
         changePage(pageNum: number) {
             this.page = pageNum
-            this.fetchAnime()
         }
 
     }
@@ -67,7 +73,7 @@ export default defineComponent({
                     class=" relative max-w-[130px] md:max-w-[200px] md:max-h-96">
                     <!-- image box -->
                     <div class=" anime-img duration-300 relative w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
-                        @click="$router.push({ name: 'anime', params: { 'episode': anime.animeId } })">
+                        @click="$router.push({ name: 'watch-anime', params: { 'animeId': anime?.animeId, 'episode': anime.episodeId } })">
                         <img class="  w-full h-full object-cover duration-300" :src="anime.animeImg" alt="">
                         <span
                             class="absolute bottom-1 left-1 bg-[red] text-white rounded-bl-md rounded-tr-md px-2 text-sm font-semibold font-sans z-10">{{

@@ -1,51 +1,54 @@
 <script lang="ts">
 import axios from 'axios';
-import { defineComponent, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { defineComponent } from 'vue';
 import Loading from '../components/Loading.vue';
 import Pagination from "../components/Pagination.vue";
 import SideAnimeList from "../components/SideAnimeList.vue";
 import { Genres } from "../types/Anime";
 export default defineComponent({
     components: { SideAnimeList, Loading, Pagination },
-    setup() {
-        const isLoading = ref<boolean>(false)
-        const animeList = ref<Genres[]>([])
-        const genre = ref<string>("")
-        const router = useRoute()
-        const page = ref<number>(1)
+    data() {
+        return {
+            animeList: [] as Genres[],
+            isLoading: false,
+            params: this.$route.params.genre,
+            page: 1 as number
+        }
+    },
 
+    watch: {
+        params: {
+            immediate: true,
+            handler() {
+                this.fetchAnime()
+            }
+        },
+        page: {
+            deep: true,
+            handler() {
+                this.fetchAnime()
 
-        const fetchAnime = async () => {
-            isLoading.value = true
-            await axios.get<Genres[]>(`https://gogoanime.consumet.stream/genre/${!genre.value ? router.params.genre : genre.value}?page=${page.value}`).then(response => {
+            }
+        }
+    },
+    mounted() {
+        this.fetchAnime()
+    },
+    methods: {
+        async fetchAnime() {
+            this.isLoading = true
+            await axios.get<Genres[]>(`https://gogoanime.consumet.stream/genre/${this.params}?page=${this.page}`).then(response => {
 
-                animeList.value = response.data
-                isLoading.value = false
+                this.animeList = response.data
+                this.isLoading = false
             }).catch(err => {
                 console.log(err);
-
             })
+        },
+        changePage(pageNum: number) {
+            this.page = pageNum
         }
-
-        // Change different genres
-        const changeGenre = (selectedGenre: string) => {
-            genre.value = selectedGenre
-            fetchAnime()
-        }
-
-
-        const changePage = (pageNum: number) => {
-            page.value = pageNum
-            fetchAnime()
-        }
-
-        onMounted(fetchAnime)
-
-
-        return { isLoading, animeList, genre, changeGenre, changePage, page }
-
-    }
+    },
 
 
 })
@@ -58,7 +61,8 @@ export default defineComponent({
         <!-- animes list -->
         <div class="w-full h-full bg-black md:rounded-xl overflow-hidden">
             <header class="bg-[red] w-full flex justify-between items-center">
-                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">ANIME GENRE {{ genre.toUpperCase() }}
+                <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">ANIME GENRE {{
+                    params.toString().toUpperCase() }}
                 </h3>
 
                 <Pagination :page="page" :change-page="changePage" :total-page="5" />
@@ -102,7 +106,7 @@ export default defineComponent({
         </div>
 
         <!-- side anime list -->
-        <SideAnimeList :change-genre="changeGenre" />
+        <SideAnimeList />
 
     </div>
 </template>

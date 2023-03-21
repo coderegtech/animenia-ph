@@ -3,17 +3,13 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: ['page', 'changePage', 'totalPage'],
-    methods: {
-        gotoPage(pageNum: number) {
-            this.changePage(pageNum)
-        }
-    }
+
 })
 
 </script>
 <template>
     <div class="flex gap-1 px-5">
-        <span v-for="pageNum in totalPage" @click="gotoPage(pageNum)" :class="{ 'bg-black': pageNum === page }"
+        <span v-for="pageNum in totalPage" @click="changePage(pageNum)" :class="{ 'bg-black': pageNum === page }"
             class="px-2 border text-white hover:bg-black cursor-pointer duration-100 rounded-md">{{ pageNum
             }}</span>
 

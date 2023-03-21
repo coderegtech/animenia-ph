@@ -14,10 +14,9 @@ export default defineComponent({
             isLoading: false as boolean,
             animeName: this.$route.params.name
         }
-    }, computed: {
-        filteredAnime() {
-            return this.fetchAnime()
-        }
+    }, created() {
+        this.fetchAnime()
+
     }, watch: {
         '$route.params': {
             handler() {

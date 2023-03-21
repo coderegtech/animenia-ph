@@ -5,7 +5,6 @@ import { TopAiring } from "../types/Anime";
 import Loading from "./Loading.vue";
 import Pagination from "./Pagination.vue";
 export default defineComponent({
-  props: ['changeGenre'],
   components: { Loading, Pagination },
   data() {
     return {
@@ -29,17 +28,12 @@ export default defineComponent({
       await axios
         .get<TopAiring[]>(`https://gogoanime.consumet.stream/top-airing?page=${this.page}`)
         .then((response) => {
-          console.log(response.data);
           this.topAiring = response.data;
           this.isLoading = false;
         })
         .catch((err) => {
           console.log(err);
         });
-    },
-    selectedGenre(genre: string) {
-      this.$router.push({ name: "anime-genres", params: { 'genre': genre } });
-      this.changeGenre(genre)
     },
     changePage(pageNum: number) {
       this.page = pageNum
@@ -85,12 +79,14 @@ export default defineComponent({
 
       <ul class="p-5">
         <li class="grid grid-cols-2">
-          <p @click="selectedGenre(genre)" v-for="(genre, index) in genres[0]" :key="index"
+          <p @click="$router.push({ name: 'anime-genres', params: { 'genre': genre } })"
+            v-for="(genre, index) in genres[0]" :key="index"
             class="text-white hover:text-[red] text-[15px] cursor-pointer p-1">
             {{ genre.replace(genre[0], (c) => c.toUpperCase()) }}
           </p>
 
-          <p @click="selectedGenre(genre)" v-for="(genre, index) in genres[1]" :key="index"
+          <p @click="$router.push({ name: 'anime-genres', params: { 'genre': genre } })"
+            v-for="(genre, index) in genres[1]" :key="index"
             class="text-white hover:text-[red] text-[15px] cursor-pointer p-1">
             {{ genre.replace(genre[0], (c) => c.toUpperCase()) }}
           </p>

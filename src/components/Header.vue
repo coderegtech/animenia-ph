@@ -20,7 +20,7 @@ export default defineComponent({
     },
     methods: {
         handleSearch() {
-            this.$router.push({ name: 'search-anime', params: { name: this.searchValue } })
+            this.$router.push({ name: 'search-anime', params: { 'name': this.searchValue } })
             this.searchValue = ""
         }, async searchInput() {
 

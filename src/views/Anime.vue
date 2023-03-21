@@ -8,7 +8,7 @@ import { Genres } from "../types/Anime";
 
 
 export default defineComponent({
-    name: "Watch",
+    name: "Anime",
     components: { SideAnimeList, Loading },
     data() {
         return {
@@ -36,18 +36,30 @@ export default defineComponent({
             },
             animeList: [] as Genres[],
             isLoading: false as boolean,
-            page: 1
+            page: 1,
+            params: this.$route.params.episode
         };
     },
     mounted() {
-        this.fetchAnimeDetails()
+        this.fetchAnimeDetails(this.params)
     },
+    watch: {
+        '$route.params': {
+            immediate: true,
+            handler(params) {
+                this.fetchAnimeDetails(params)
+            }
+        }
+    },
+
     methods: {
-        async fetchAnimeDetails() {
+        async fetchAnimeDetails(id: string | string[]) {
             this.isLoading = true;
             await axios
-                .get(`https://gogoanime.consumet.stream/anime-details/${this.$route.params.episode}`)
+                .get(`https://gogoanime.consumet.stream/anime-details/${id}`)
                 .then((response) => {
+                    console.log(response.data);
+
                     this.animeDetails = { ...response.data };
                     this.isLoading = false;
 
@@ -62,7 +74,7 @@ export default defineComponent({
         async fetchAnime(genres: [string]) {
             this.isLoading = true
 
-            await axios.get(`https://gogoanime.consumet.stream/genre/${genres[0]}`).then(response => {
+            await axios.get(`https://gogoanime.consumet.stream/genre/${genres[0]}`).then((response) => {
 
                 this.animeList = response.data
                 this.isLoading = false
@@ -83,9 +95,9 @@ export default defineComponent({
     <div class="w-full md:p-5 py-1 flex gap-5 justify-between">
 
 
-        <div class="w-full relative ">
+        <div class="w-full ">
             <!-- animes list -->
-            <div class="w-full  bg-black md:rounded-xl overflow-hidden">
+            <div class=" w-full  bg-black md:rounded-xl overflow-hidden">
                 <header class="bg-[red] w-full">
                     <h3 class="text-sm md:text-base font-semibold text-white px-5 py-2">WATCH ANIME - {{
                         animeDetails.animeTitle
@@ -95,11 +107,12 @@ export default defineComponent({
                 <Loading v-if="isLoading" />
 
 
-                <div class="w-full grid gap-5 p-5">
+                <div class="relative w-full flex flex-col xl:flex-row gap-5 p-5">
+
                     <!-- image container -->
-                    <img class="w-full max-h-96 object-cover" :src="animeDetails.animeImg" alt="">
+                    <img class="w-full lg:max-w-[300px] max-h-96 object-cover" :src="animeDetails.animeImg" alt="">
                     <!-- anime details -->
-                    <div>
+                    <div class="w-full">
                         <h2 class="text-xl text-white font-bold">
                             {{ animeDetails.animeTitle }}
                         </h2>
@@ -162,6 +175,7 @@ export default defineComponent({
                     <p class="text-white text-lg text-bold py-1">Episode List:</p>
                     <div class=" flex flex-wrap gap-2">
                         <span v-for="episode in animeDetails.episodesList" :key="episode.episodeNum"
+                            @click="$router.push({ name: 'watch-anime', params: { 'animeId': params, 'episode': episode.episodeId } })"
                             class="bg-[red] text-white cursor-pointer w-10 text-center">{{
                                 episode.episodeNum
                             }}</span>
