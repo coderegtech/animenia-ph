@@ -5,6 +5,8 @@ import axios from "axios";
 import Loading from "../components/Loading.vue";
 import SideAnimeList from "../components/SideAnimeList.vue";
 import { Genres } from "../types/Anime";
+
+
 export default defineComponent({
     name: "Watch",
     components: { SideAnimeList, Loading },
@@ -18,6 +20,7 @@ export default defineComponent({
                 animeImg: "",
                 synopsis: "",
                 otherNames: "",
+                totalEpisodes: "",
                 genres: [""],
                 episodesList: [
                     {
@@ -37,15 +40,8 @@ export default defineComponent({
         };
     },
     mounted() {
-        this.fetchAnime()
-        this.fetchAnimeDetails()
-
-    }, unmounted() {
-        this.fetchAnime()
         this.fetchAnimeDetails()
     },
-
-
     methods: {
         async fetchAnimeDetails() {
             this.isLoading = true;
@@ -54,17 +50,20 @@ export default defineComponent({
                 .then((response) => {
                     this.animeDetails = { ...response.data };
                     this.isLoading = false;
+
+                    this.fetchAnime(response.data.genres)
+
                 })
                 .catch((err) => {
                     console.log(err);
                 });
         },
 
-        async fetchAnime() {
+        async fetchAnime(genres: [string]) {
             this.isLoading = true
 
+            await axios.get(`https://gogoanime.consumet.stream/genre/${genres[0]}`).then(response => {
 
-            await axios.get(`https://gogoanime.consumet.stream/genre/${this.animeDetails.genres.join("?") || 'action'}`).then(response => {
                 this.animeList = response.data
                 this.isLoading = false
 
@@ -74,10 +73,7 @@ export default defineComponent({
             })
         },
 
-        changePage(pageNum: number) {
-            this.page = pageNum
-            this.fetchAnime()
-        }
+
     }
 
 });
@@ -99,14 +95,11 @@ export default defineComponent({
                 <Loading v-if="isLoading" />
 
 
-                <div class="w-full flex flex-col md:flex-row justify-start items-start">
+                <div class="w-full grid gap-5 p-5">
                     <!-- image container -->
-                    <div class="p-5 shrink-0">
-                        <img class="max-w-[300px] max-h-96 object-cover" :src="animeDetails.animeImg" alt="">
-                    </div>
-
+                    <img class="w-full max-h-96 object-cover" :src="animeDetails.animeImg" alt="">
                     <!-- anime details -->
-                    <div class=" p-5">
+                    <div>
                         <h2 class="text-xl text-white font-bold">
                             {{ animeDetails.animeTitle }}
                         </h2>
@@ -117,7 +110,8 @@ export default defineComponent({
                             <li class="flex gap-2 items-start">
                                 <span class="text-white/80  font-semibold text-[15px]">Genres:
                                 </span>
-                                <span class="flex flex-wrap gap-x-1 " v-for="genres in animeDetails.genres">
+                                <span class="flex flex-wrap gap-x-1 " v-for="genres, index in animeDetails.genres"
+                                    :key="index">
                                     <p class="text-[red] text-sm">
                                         {{ genres }},
                                     </p>
@@ -130,28 +124,28 @@ export default defineComponent({
                                 <span class="text-white/80  font-semibold text-[15px]">Type:
                                 </span>
                                 <p class="text-[red] text-sm">
-                                    TV Series
+                                    {{ animeDetails.type }}
                                 </p>
                             </li>
                             <li class="flex gap-2 items-end">
                                 <span class="text-white/80  font-semibold text-[15px]">Status:
                                 </span>
                                 <p class="text-[red] text-sm">
-                                    Completed
+                                    {{ animeDetails.status }}
                                 </p>
                             </li>
                             <li class="flex gap-2 items-end">
                                 <span class="text-white/80  font-semibold text-[15px]">Episodes:
                                 </span>
                                 <p class="text-[red] text-sm">
-                                    220
+                                    {{ animeDetails.totalEpisodes }}
                                 </p>
                             </li>
                             <li class="flex gap-2 items-end">
                                 <span class="text-white/80  font-semibold text-[15px]">Released Date:
                                 </span>
                                 <p class="text-[red] text-sm">
-                                    2002
+                                    {{ animeDetails.releasedDate }}
                                 </p>
                             </li>
                         </ul>
@@ -187,9 +181,9 @@ export default defineComponent({
 
                     <!-- anime list items -->
                     <div v-for="anime, index in animeList" :key="index"
-                        class="max-w-[130px] md:max-w-[200px] md:max-h-96 flex gap-2 items-start">
+                        class="max-w-[130px] md:max-w-[200px] md:max-h-96 grid md:grid-cols-2 gap-2 items-start">
                         <!-- image box -->
-                        <div class=" anime-img duration-300 relative min-w-[50px] w-full h-[90px]  bg-white/20 rounded-md overflow-hidden"
+                        <div class=" anime-img duration-300 relative min-w-[50px] w-full h-[100px]  bg-white/20 rounded-md overflow-hidden"
                             @click="$router.push({ name: 'anime', params: { 'episode': anime.animeId } })">
                             <img class="  w-full h-full object-cover duration-300" :src="anime.animeImg" alt="">
 
@@ -198,10 +192,10 @@ export default defineComponent({
                                     name="hi-solid-play" scale="2.5" color="red"></v-icon></span>
                         </div>
 
-                        <div class="min-w-[100px]">
+                        <div class="min-w-[120px]">
                             <!-- anime title -->
                             <p class="text-[13px] md:text-base font-semibold text-white hover:text-[red] cursor-pointer">{{
-                                anime.animeTitle
+                                anime.animeTitle.substring(0, 35) + "..."
                             }}</p>
 
 

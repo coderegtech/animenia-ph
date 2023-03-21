@@ -45,6 +45,10 @@ const routes = [
         path: '/:episode',
         name: 'anime',
         component: () => import("./views/Anime.vue"), 
+    },  {
+        path: '/watch/:episode',
+        name: 'watch-anime',
+        component: () => import("./views/WatchAnime.vue"), 
     }, 
 ]
 
