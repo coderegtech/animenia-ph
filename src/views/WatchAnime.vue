@@ -3,11 +3,12 @@ import { defineComponent } from "vue";
 
 import axios from "axios";
 import Loading from "../components/Loading.vue";
+import RelatedAnime from "../components/RelatedAnime.vue";
 import SideAnimeList from "../components/SideAnimeList.vue";
 
 export default defineComponent({
     name: "WatchAnime",
-    components: { SideAnimeList, Loading },
+    components: { SideAnimeList, Loading, RelatedAnime },
     data() {
         return {
             animeDetails: {
@@ -108,10 +109,10 @@ export default defineComponent({
                     }}</h3>
                 </header>
 
+                <Loading v-if="isLoading" />
 
 
                 <div class="relative w-full md:p-5 flex flex-col md:flex-col-reverse gap-3">
-                    <Loading v-if="isLoading" />
 
 
                     <div class="w-full h-[265px] xl:min-h-[75vh] relative  overflow-hidden">
@@ -194,7 +195,7 @@ export default defineComponent({
                 </div>
             </div>
 
-
+            <RelatedAnime :genres="animeDetails.genres" />
 
         </div>
 

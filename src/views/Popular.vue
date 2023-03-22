@@ -21,7 +21,6 @@ export default defineComponent({
         async fetchAnime() {
             this.isLoading = true
             await axios.get<Popular[]>(`https://gogoanime.consumet.stream/popular?page=${this.page}`).then(response => {
-                console.log(response.data);
                 this.animeList = response.data
                 this.isLoading = false
 
