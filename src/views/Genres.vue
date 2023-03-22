@@ -102,7 +102,7 @@ export default defineComponent({
 
 
                         <!-- episode -->
-                        <span class="text-[13px] md:text-sm text-white/80">Episode {{ anime.releasedDate }}</span>
+                        <span class="text-[13px] md:text-sm text-white/80">Released: {{ anime.releasedDate }}</span>
                     </div>
 
                 </div>

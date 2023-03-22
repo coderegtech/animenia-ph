@@ -50,7 +50,7 @@ export default defineComponent({
 
         <h3 class="font-semibold text-white px-3 py-2">TOP ANIME</h3>
 
-        <Pagination :change-page="changePage" :page="page" :total-page="5" />
+        <Pagination :change-page="changePage" :page="page" :total-page="3" />
       </header>
 
       <Loading v-if="isLoading" />
