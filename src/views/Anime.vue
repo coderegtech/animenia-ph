@@ -37,7 +37,7 @@ export default defineComponent({
             animeList: [] as Genres[],
             isLoading: false as boolean,
             page: 1,
-            params: this.$route.params.episode
+            params: this.$route.params.animeId
         };
     },
     mounted() {
@@ -47,23 +47,28 @@ export default defineComponent({
         '$route.params': {
             immediate: true,
             handler(params) {
-                this.fetchAnimeDetails(params)
+                this.fetchAnimeDetails(params.animeId)
             }
         }
     },
 
     methods: {
-        async fetchAnimeDetails(id: string | string[]) {
+        async fetchAnimeDetails(animeId: string | string[]) {
             this.isLoading = true;
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+
             await axios
-                .get(`https://gogoanime.consumet.stream/anime-details/${id}`)
+                .get(`https://gogoanime.consumet.stream/anime-details/${animeId}`)
                 .then((response) => {
-                    console.log(response.data);
 
                     this.animeDetails = { ...response.data };
                     this.isLoading = false;
-
                     this.fetchAnime(response.data.genres)
+
+
 
                 })
                 .catch((err) => {
@@ -107,20 +112,20 @@ export default defineComponent({
                 <Loading v-if="isLoading" />
 
 
-                <div class="relative w-full flex flex-col xl:flex-row gap-5 p-5">
+                <div class="relative w-full flex justify-start items-start flex-col  xl:flex-row gap-5 p-5">
 
                     <!-- image container -->
-                    <img class="w-full lg:max-w-[300px] max-h-96 object-cover" :src="animeDetails.animeImg" alt="">
+                    <img class=" max-h-72 lg:max-w-[300px] md:max-h-96 object-contain" :src="animeDetails.animeImg" alt="">
                     <!-- anime details -->
                     <div class="w-full">
                         <h2 class="text-xl text-white font-bold">
                             {{ animeDetails.animeTitle }}
                         </h2>
-                        <!-- <span class="text-white/90"> {{ animeDetails.otherNames }} </span> -->
+                        <span class="text-white/90"> {{ animeDetails.otherNames }} </span>
                         <p class="text-white/80 py-1">{{ animeDetails.synopsis }}</p>
 
                         <ul>
-                            <li class="flex gap-2 items-start">
+                            <li class="flex flex-wrap gap-x-2 items-start">
                                 <span class="text-white/80  font-semibold text-[15px]">Genres:
                                 </span>
                                 <span class="flex flex-wrap gap-x-1 " v-for="genres, index in animeDetails.genres"
@@ -198,7 +203,7 @@ export default defineComponent({
                         class="max-w-[130px] md:max-w-[200px] md:max-h-96 grid md:grid-cols-2 gap-2 items-start">
                         <!-- image box -->
                         <div class=" anime-img duration-300 relative min-w-[50px] w-full h-[100px]  bg-white/20 rounded-md overflow-hidden"
-                            @click="$router.push({ name: 'anime', params: { 'episode': anime.animeId } })">
+                            @click="$router.push({ name: 'anime', params: { 'animeId': anime.animeId } })">
                             <img class="  w-full h-full object-cover duration-300" :src="anime.animeImg" alt="">
 
                             <span

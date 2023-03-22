@@ -1,6 +1,5 @@
 <template>
-  <div class="h-screen flex justify-center items-center">
-
+  <div class="h-screen w-full  bg-black flex justify-center items-center">
     <div class="loader"></div>
   </div>
 </template>

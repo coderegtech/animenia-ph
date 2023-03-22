@@ -35,44 +35,48 @@ export default defineComponent({
             currentEpisode: this.$route.params.episode
         };
     },
-    created() {
-        this.fetchAnimeDetails(this.animeId)
-        this.fetchWatchAnime()
+    mounted() {
+        this.fetchAnimeDetails()
+        this.fetchWatchAnime(this.currentEpisode)
 
     },
     watch: {
-        currentEpisode: {
-            deep: true,
-            handler(episode) {
-                console.log(episode);
-                this.fetchWatchAnime()
+        '$route.params': {
+            immediate: true,
+            handler(params) {
+                this.currentEpisode = params.episode
+                this.fetchWatchAnime(params.episode)
             }
         }
     },
 
     methods: {
-        async fetchAnimeDetails(animeId: string | string[]) {
+        async fetchAnimeDetails() {
             this.isLoading = true;
 
             await axios
-                .get(`https://gogoanime.consumet.stream/anime-details/${animeId}`)
+                .get(`https://gogoanime.consumet.stream/anime-details/${this.animeId}`)
                 .then((response) => {
-                    console.log(response.data);
 
                     this.animeDetails = { ...response.data };
                     this.isLoading = false;
+
                 })
                 .catch((err) => {
                     console.log(err);
                 });
         },
-        async fetchWatchAnime() {
+        async fetchWatchAnime(episode: string | string[]) {
             this.isLoading = true;
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
 
             await axios
-                .get(`https://gogoanime.consumet.stream/vidcdn/watch/${this.currentEpisode}`)
+                .get(`https://gogoanime.consumet.stream/vidcdn/watch/${episode}`)
                 .then((response) => {
-                    console.log(response.data);
+
 
                     this.animeLink = response.data.Referer;
                     this.isLoading = false;
@@ -104,14 +108,15 @@ export default defineComponent({
                     }}</h3>
                 </header>
 
-                <Loading v-if="isLoading" />
 
 
                 <div class="relative w-full md:p-5 flex flex-col md:flex-col-reverse gap-3">
+                    <Loading v-if="isLoading" />
 
 
-                    <div class="w-full h-[260px] xl:min-h-[75vh] relative  overflow-hidden">
-                        <iframe class="w-full h-full" :src="animeLink" allowfullscreen="true" marginwidth="0"
+                    <div class="w-full h-[265px] xl:min-h-[75vh] relative  overflow-hidden">
+                        <iframe class="w-full h-full " :src="animeLink" allowfullscreen="true" marginwidth="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             marginheight="0" scrolling="no" frameborder="0"></iframe>
                     </div>
 
@@ -119,11 +124,11 @@ export default defineComponent({
                     <!-- anime details -->
                     <div class="w-full px-3 md:p-0">
                         <h2 class="text-lg md:text-xl text-white font-bold">
-                            {{ animeDetails.animeTitle }} - {{ currentEpisode }}
+                            {{ animeDetails.animeTitle }} - <span class="text-base md:text-lg">{{ currentEpisode }}</span>
                         </h2>
 
-                        <ul>
-                            <li class="flex gap-2 items-start">
+                        <ul class="">
+                            <li class="flex flex-wrap gap-x-2 items-start">
                                 <span class="text-white/80  font-semibold text-[15px]">Genres:
                                 </span>
                                 <span class="flex flex-wrap gap-x-1 " v-for="genres, index in animeDetails.genres"

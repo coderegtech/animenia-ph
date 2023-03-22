@@ -15,20 +15,19 @@ export default defineComponent({
             animeName: this.$route.params.name
         }
     }, created() {
-        this.fetchAnime()
-
+        this.fetchAnime(this.animeName)
     }, watch: {
         '$route.params': {
-            handler() {
-                this.fetchAnime()
+            handler(params) {
+                this.fetchAnime(params.name)
             }, immediate: true
         }
     },
 
     methods: {
-        async fetchAnime() {
+        async fetchAnime(name: string | string[]) {
             this.isLoading = true
-            await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${this.animeName}`).then(response => {
+            await axios.get<Search[]>(`https://gogoanime.consumet.stream/search?keyw=${name}`).then(response => {
 
                 this.animeList = response.data
                 this.isLoading = false
@@ -65,7 +64,7 @@ export default defineComponent({
                     v-else>
                     <!-- image box -->
                     <div class=" anime-img duration-300 relative w-full h-48 md:max-h-72 md:h-full bg-white/20 rounded-md overflow-hidden"
-                        @click="$router.push({ name: 'anime', params: { 'episode': anime.animeId } })">
+                        @click="$router.push({ name: 'anime', params: { 'animeId': anime.animeId } })">
                         <img class="  w-full h-full object-cover duration-300" :src="anime.animeImg" alt="">
 
                         <span

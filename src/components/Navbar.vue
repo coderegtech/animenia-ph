@@ -8,12 +8,7 @@ import Loading from './Loading.vue';
 export default defineComponent({
     name: "Navbar",
     components: { Loading },
-    props: {
-        active: {
-            required: true,
-            type: Boolean
-        }
-    },
+    props: ['active', 'close'],
     data() {
         return {
             searchValue: "" as string,
@@ -31,10 +26,13 @@ export default defineComponent({
     methods: {
         selectedGenre(genre: string) {
             this.$router.push({ name: 'anime-genres', params: { 'genre': genre } })
+            this.close()
+
         },
         handleSearch() {
             this.$router.push({ name: 'search-anime', params: { 'name': this.searchValue } })
             this.searchValue = ""
+            this.close()
         }, async searchInput() {
 
             this.isLoading = true
@@ -73,13 +71,17 @@ export default defineComponent({
             </form>
 
             <div v-if="isActive && searchValue"
-                class="absolute top-12 right-0 w-full max-h-72 py-2 bg-black border border-white/20 rounded-md  overflow-y-auto scrollbar">
+                class="absolute top-12 right-0 w-full max-h-72 bg-black border border-white/20 rounded-md  overflow-y-auto scrollbar">
                 <p class="text-white text-center" v-if="isLoading">loading...</p>
 
                 <p class="text-white text-center" v-else-if="!animeList.length">Not found</p>
 
                 <ul v-else>
-                    <li v-for="anime in animeList" :key="anime.animeId" class="flex gap-3 p-2">
+                    <li v-for="anime in animeList" :key="anime.animeId" class="flex gap-3 p-2 hover:bg-white/10" @click="() => {
+                        $router.push({ name: 'anime', params: { 'animeId': anime.animeId } })
+                        searchValue = ''
+                        close()
+                    }">
                         <img :src="anime.animeImg" class="w-10 h-14 object-cover" alt="">
 
                         <p class="text-white text-sm">{{ anime.animeTitle }}</p>

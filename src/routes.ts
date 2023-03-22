@@ -42,7 +42,7 @@ const routes = [
         component: () => import("./views/Genres.vue")
     }, 
     {
-        path: '/category/:episode',
+        path: '/category/:animeId',
         name: 'anime',
         component: () => import("./views/Anime.vue"), 
     },  {

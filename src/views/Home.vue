@@ -64,9 +64,9 @@ export default defineComponent({
                 <Pagination :page="page" :change-page="changePage" :total-page="5" />
             </header>
 
-            <Loading v-if="isLoading" />
 
-            <div class="relative w-full p-5 flex gap-5 flex-wrap justify-center">
+            <div class="relative w-full h-full p-5 flex gap-5 flex-wrap justify-center items-center">
+                <Loading v-if="isLoading" />
 
                 <!-- anime list items -->
                 <div v-for="anime in animeList" :key="anime.episodeId"

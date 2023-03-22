@@ -35,7 +35,8 @@ export default defineComponent({
                 console.log(err);
             })
 
-        }
+        },
+
     },
 })
 
@@ -86,7 +87,10 @@ export default defineComponent({
 
                 <ul v-else>
                     <li v-for="anime in animeList" :key="anime.animeId"
-                        class="flex gap-3 p-2 cursor-pointer hover:bg-white/10">
+                        class="flex gap-3 p-2 cursor-pointer hover:bg-white/10" @click="() => {
+                            $router.push({ name: 'anime', params: { 'animeId': anime.animeId } })
+                            searchValue = ''
+                        }">
                         <img :src="anime.animeImg" class="w-10 h-14 object-cover" alt="">
 
                         <p class="text-white text-sm">{{ anime.animeTitle }}</p>
@@ -105,7 +109,7 @@ export default defineComponent({
             <span class="w-full h-[3px] bg-white rounded-lg"></span>
         </div>
 
-        <Navbar :active="navbarActive" />
+        <Navbar :active="navbarActive" :close="() => navbarActive = false" />
 
     </header>
 </template>
