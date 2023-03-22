@@ -61,7 +61,6 @@ export default defineComponent({
         <!-- navbar -->
         <ul class="text-white lg:flex gap-5 hidden">
             <li class="cursor-pointer hover:text-[red]"><router-link to="/">HOME</router-link></li>
-            <li class="cursor-pointer hover:text-[red]"> ANIME LIST</li>
             <li class="cursor-pointer hover:text-[red]"><router-link to="/new-season">NEW SEASON</router-link></li>
             <li class="cursor-pointer hover:text-[red]"><router-link to="/anime-movies">MOVIES</router-link> </li>
             <li class="cursor-pointer hover:text-[red]"><router-link to="/popular">POPULAR</router-link> </li>

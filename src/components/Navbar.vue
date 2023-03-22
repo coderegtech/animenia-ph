@@ -96,7 +96,6 @@ export default defineComponent({
         <ul class="text-white flex flex-col gap-5">
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link to="/">HOME</router-link>
             </li>
-            <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1">ANIME LIST</li>
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link to="/new-season">NEW
                     SEASON</router-link></li>
             <li class="cursor-pointer hover:text-[red] border-b border-white/10 py-1"><router-link

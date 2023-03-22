@@ -12,11 +12,6 @@ const routes = [
         component: () => import("./views/Home.vue")
     },
     {
-        path: '/anime-list',
-        name: 'anime-list',
-        component: () => import("./views/AnimeList.vue")
-    },
-    {
         path: '/new-season',
         name: 'new-season',
         component: () => import("./views/NewSeason.vue")
