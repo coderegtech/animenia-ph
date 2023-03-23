@@ -12,7 +12,11 @@ export default defineComponent({
         return {
             animeList: [] as Search[],
             isLoading: false as boolean,
-            animeName: this.$route.params.name
+            animeName: this.$route.params.name,
+            error: {
+                isError: false as boolean,
+                errMsg: "" as string
+            },
         }
     }, created() {
         this.fetchAnime(this.animeName)
@@ -34,7 +38,11 @@ export default defineComponent({
 
             }).catch(err => {
                 console.log(err);
-
+                this.isLoading = false;
+                this.error = {
+                    isError: true,
+                    errMsg: err.message
+                }
             })
         }
     }
@@ -57,7 +65,16 @@ export default defineComponent({
 
                 <Loading v-if="isLoading" />
 
+
                 <p class="text-white text-center" v-else-if="!animeList.length">Not found</p>
+
+                <span class="h-[80vh] grid place-content-center text-center" v-else-if="error.isError">
+                    <h2 class="text-[red] text-xl">
+                        {{ error.errMsg }}
+                    </h2>
+                    <p class="text-white text-lg">Please try again later.</p>
+                </span>
+
 
                 <!-- anime list items -->
                 <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96"

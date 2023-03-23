@@ -16,7 +16,11 @@ export default defineComponent({
         "romance", "samurai", "school", "sci-fi", "seinen", "shoujo", "shoujo-ai", "shounen", "shounen-ai", "slice-of-Life", "space",
         "sports", "super-power", "supernatural", "suspense", "thriller", "vampire", "yaoi", "yuri",]
       ],
-      page: 1 as number
+      page: 1 as number,
+      error: {
+        isError: false as boolean,
+        errMsg: "" as string
+      },
     };
   },
   mounted() {
@@ -32,7 +36,11 @@ export default defineComponent({
           this.isLoading = false;
         })
         .catch((err) => {
-          console.log(err);
+          this.isLoading = false
+          this.error = {
+            isError: true,
+            errMsg: err.message
+          }
         });
     },
     changePage(pageNum: number) {
@@ -55,8 +63,14 @@ export default defineComponent({
 
       <Loading v-if="isLoading" />
 
+      <span class="h-[80vh] grid place-content-center text-center" v-else-if="error.isError">
+        <h2 class="text-[red] text-xl">
+          {{ error.errMsg }}
+        </h2>
+        <p class="text-white text-lg">Please try again later.</p>
+      </span>
 
-      <ul class="p-5 h-full">
+      <ul class="p-5 h-full" v-else>
 
         <li class="py-2 flex gap-3 hover:scale-105 duration-200" v-for="(anime, index) in topAiring" :key="anime?.animeId"
           @click="$router.push({ name: 'anime', params: { 'animeId': anime?.animeId } })">

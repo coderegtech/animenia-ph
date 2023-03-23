@@ -12,7 +12,11 @@ export default defineComponent({
             animeList: [] as Genres[],
             isLoading: false,
             params: this.$route.params.genre,
-            page: 1 as number
+            page: 1 as number,
+            error: {
+                isError: false as boolean,
+                errMsg: "" as string
+            },
         }
     },
 
@@ -48,7 +52,11 @@ export default defineComponent({
                 this.animeList = response.data
                 this.isLoading = false
             }).catch(err => {
-                console.log(err);
+                this.isLoading = false;
+                this.error = {
+                    isError: true,
+                    errMsg: err.message
+                }
             })
         },
         changePage(pageNum: number) {
@@ -79,7 +87,16 @@ export default defineComponent({
 
                 <Loading v-if="isLoading" />
 
+                <span class="h-[80vh] grid place-content-center text-center" v-else-if="error.isError">
+                    <h2 class="text-[red] text-xl">
+                        {{ error.errMsg }}
+                    </h2>
+                    <p class="text-white text-lg">Please try again later.</p>
+                </span>
+
                 <p class="text-white text-center" v-else-if="!animeList.length">Not found</p>
+
+
 
                 <!-- anime list items -->
                 <div v-for="anime, index in animeList" :key="index" class="max-w-[130px] md:max-w-[200px] md:max-h-96"

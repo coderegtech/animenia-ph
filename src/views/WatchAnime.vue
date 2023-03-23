@@ -33,7 +33,11 @@ export default defineComponent({
             animeLink: "" as string,
             isLoading: false as boolean,
             animeId: this.$route.params.animeId,
-            currentEpisode: this.$route.params.episode
+            currentEpisode: this.$route.params.episode,
+            error: {
+                isError: false as boolean,
+                errMsg: "" as string
+            },
         };
     },
     mounted() {
@@ -64,7 +68,12 @@ export default defineComponent({
 
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err)
+                    this.isLoading = false;
+                    this.error = {
+                        isError: true,
+                        errMsg: err.message
+                    }
                 });
         },
         async fetchWatchAnime(episode: string | string[]) {
@@ -86,6 +95,11 @@ export default defineComponent({
                 })
                 .catch((err) => {
                     console.log(err);
+                    this.isLoading = false;
+                    this.error = {
+                        isError: true,
+                        errMsg: err.message
+                    }
                 });
         }
 
@@ -111,8 +125,15 @@ export default defineComponent({
 
                 <Loading v-if="isLoading" />
 
+                <span class="h-[80vh] grid place-content-center text-center" v-else-if="error.isError">
+                    <h2 class="text-[red] text-xl">
+                        {{ error.errMsg }}
+                    </h2>
+                    <p class="text-white text-lg">Please try again later.</p>
+                </span>
 
-                <div class="relative w-full md:p-5 flex flex-col md:flex-col-reverse gap-3">
+
+                <div class="relative w-full md:p-5 flex flex-col md:flex-col-reverse gap-3" v-else>
 
 
                     <div class="w-full h-[265px] xl:min-h-[75vh] relative  overflow-hidden">

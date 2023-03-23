@@ -5,8 +5,7 @@ import axios from 'axios';
 import Loading from '../components/Loading.vue';
 import Pagination from '../components/Pagination.vue';
 import SideAnimeList from "../components/SideAnimeList.vue";
-import { Anime } from "../types/Anime";
-
+import { Anime } from '../types/Anime';
 export default defineComponent({
     name: 'Home',
     components: { SideAnimeList, Loading, Pagination },
@@ -14,6 +13,10 @@ export default defineComponent({
         return {
             animeList: [] as Anime[],
             isLoading: false as boolean,
+            error: {
+                isError: false as boolean,
+                errMsg: "" as string
+            },
             page: 1 as number
         }
     },
@@ -30,15 +33,21 @@ export default defineComponent({
         this.fetchAnime()
     }, methods: {
         async fetchAnime() {
-            this.isLoading = true
-            await axios.get<Anime[]>(`https://gogoanime.consumet.stream/recent-release?page=${this.page}?limit=5`).then(response => {
+
+            await axios.get<Anime[]>(`https://gogoanime.consumet.stream/recent-release?page=${this.page}`).then(response => {
                 this.animeList = response.data
                 this.isLoading = false
 
             }).catch(err => {
                 console.log(err);
+                this.isLoading = false;
+                this.error = {
+                    isError: true,
+                    errMsg: err.message
+                }
 
             })
+
         },
 
         changePage(pageNum: number) {
@@ -67,9 +76,16 @@ export default defineComponent({
             <div class="relative w-full h-full p-5 flex gap-5 flex-wrap justify-center items-start">
                 <Loading v-if="isLoading" />
 
+                <span class="h-[80vh] grid place-content-center text-center" v-else-if="error.isError">
+                    <h2 class="text-[red] text-xl">
+                        {{ error.errMsg }}
+                    </h2>
+                    <p class="text-white text-lg">Please try again later.</p>
+                </span>
+
                 <!-- anime list items -->
                 <div v-for="anime in animeList" :key="anime.episodeId"
-                    class=" relative max-w-[130px] md:max-w-[200px] md:max-h-96">
+                    class=" relative max-w-[130px] md:max-w-[200px] md:max-h-96" v-else>
                     <!-- image box -->
                     <div class=" anime-img duration-300 relative w-full h-48 md:h-72  bg-white/20 rounded-md overflow-hidden"
                         @click="$router.push({ name: 'watch-anime', params: { 'animeId': anime?.animeId, 'episode': anime.episodeId } })">

@@ -13,7 +13,11 @@ export default defineComponent({
         return {
             animeList: [] as Popular[],
             isLoading: false as boolean,
-            page: 1 as number
+            page: 1 as number,
+            error: {
+                isError: false as boolean,
+                errMsg: "" as string
+            },
         }
     }, async mounted() {
         this.fetchAnime()
@@ -26,7 +30,11 @@ export default defineComponent({
 
             }).catch(err => {
                 console.log(err);
-
+                this.isLoading = false;
+                this.error = {
+                    isError: true,
+                    errMsg: err.message
+                }
             })
         },
 
@@ -57,7 +65,14 @@ export default defineComponent({
             <Loading v-if="isLoading" />
 
 
-            <div class="w-full p-5 flex gap-5 flex-wrap justify-center">
+            <span class="h-[80vh] grid place-content-center text-center" v-else-if="error.isError">
+                <h2 class="text-[red] text-xl">
+                    {{ error.errMsg }}
+                </h2>
+                <p class="text-white text-lg">Please try again later.</p>
+            </span>
+
+            <div class="w-full p-5 flex gap-5 flex-wrap justify-center" v-else>
 
 
                 <!-- anime list items -->
