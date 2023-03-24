@@ -9,4 +9,5 @@ export default defineConfig({
       '/api': 'https://gogoanime.consumet.stream/'
     }
   }
+  ,
 })

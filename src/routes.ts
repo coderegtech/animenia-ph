@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     { 
-        path: '/:pathMatch(.*)*', 
+        path: '/:catchAll(.*)*', 
         name: 'NotFound', 
         component: () => import("./views/ErrorPage.vue") 
     },
@@ -50,7 +50,8 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    
 })
 
 export default router
