@@ -60,7 +60,7 @@ export default defineComponent({
             this.isLoading = true;
 
             await axios
-                .get(`http://0.0.0.0:3000/anime-details/${this.animeId}`)
+                .get(`https://gogoanime.consumet.stream/anime-details/${this.animeId}`)
                 .then((response) => {
 
                     this.animeDetails = { ...response.data };
@@ -84,7 +84,7 @@ export default defineComponent({
             })
 
             await axios
-                .get(`http://0.0.0.0:3000/vidcdn/watch/${episode}`)
+                .get(`https://gogoanime.consumet.stream/vidcdn/watch/${episode}`)
                 .then((response) => {
 
 

@@ -59,7 +59,7 @@ export default defineComponent({
             })
 
             await axios
-                .get(`http://0.0.0.0:3000/anime-details/${animeId}`)
+                .get(`https://gogoanime.consumet.stream/anime-details/${animeId}`)
                 .then((response) => {
 
                     this.animeDetails = { ...response.data };

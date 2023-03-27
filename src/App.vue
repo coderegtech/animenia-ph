@@ -5,9 +5,7 @@ import Header from "./components/Header.vue";
 import ScrollTop from './components/ScrollTop.vue';
 export default defineComponent({
   name: 'App',
-
   components: { Header, Footer, ScrollTop },
-
 })
 
 
