@@ -47,7 +47,7 @@ export default defineComponent({
                 behavior: 'smooth'
             })
 
-            await axios.get<Genres[]>(`https://gogoanime.consumet.stream/genre/${genre}?page=${this.page}`).then(response => {
+            await axios.get<Genres[]>(`http://0.0.0.0:3000/genre/${genre}?page=${this.page}`).then(response => {
 
                 this.animeList = response.data
                 this.isLoading = false
