@@ -7,11 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://gogoanime.consumet.stream', // Replace this with the URL of your API server
-        ws: true,
-        changeOrigin: true
+        target: 'https://webdis-emec.onrender.com/',
+        changeOrigin: true,
+           secure: false,      
+           ws: true,
+        rewrite: path => path.replace(/^\/api/, '')
       }
-    }
   }
-  ,
+}
 })
