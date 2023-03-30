@@ -30,7 +30,7 @@ export default defineComponent({
     async fetchAnime() {
       this.isLoading = true;
       await axios
-        .get<TopAiring[]>(`/api/top-airing?page=${this.page}`)
+        .get<TopAiring[]>(`https://webdis-emec.onrender.com/top-airing?page=${this.page}`)
         .then((response) => {
           this.topAiring = response.data;
           this.isLoading = false;

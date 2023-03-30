@@ -36,7 +36,7 @@ export default defineComponent({
         }, async searchInput() {
 
             this.isLoading = true
-            await axios.get<Search[]>(`/api/search?keyw=${this.searchValue}`).then(response => {
+            await axios.get<Search[]>(`https://webdis-emec.onrender.com/search?keyw=${this.searchValue}`).then(response => {
                 this.isActive = true
                 this.isLoading = false
 

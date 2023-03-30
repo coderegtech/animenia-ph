@@ -60,7 +60,7 @@ export default defineComponent({
             this.isLoading = true;
 
             await axios
-                .get(`/api/anime-details/${this.animeId}`)
+                .get(`/https://webdis-emec.onrender.com/anime-details/${this.animeId}`)
                 .then((response) => {
 
                     this.animeDetails = { ...response.data };
@@ -84,7 +84,7 @@ export default defineComponent({
             })
 
             await axios
-                .get(`/api/vidcdn/watch/${episode}`)
+                .get(`/https://webdis-emec.onrender.com/vidcdn/watch/${episode}`)
                 .then((response) => {
 
 
