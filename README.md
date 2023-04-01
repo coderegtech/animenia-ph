@@ -1,4 +1,9 @@
 # Vue 3 + TypeScript + Vite
+# ANIMENIA-PH 
+![Screenshot from 2023-03-08 08-43-10](https://user-images.githubusercontent.com/98440814/229259443-a00b7b3a-5c68-4b60-8860-82e7a7c9b31d.png)
+![Screenshot from 2023-03-22 00-15-41](https://user-images.githubusercontent.com/98440814/229259448-d938b992-7af6-4bde-babd-5cd0a1f1c11e.png)
+
+
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
