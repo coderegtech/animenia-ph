@@ -49,7 +49,7 @@ const routes = [
 
 
 const router = createRouter({
-    history: createWebHistory("/animenia-ph/"),
+    history: createWebHistory(),
     routes,
     
 })

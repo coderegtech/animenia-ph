@@ -160,7 +160,7 @@ export default defineComponent({
                     <div class=" flex flex-wrap gap-2">
                         <span v-for="episode in animeDetails.episodesList" :key="episode.episodeNum"
                             @click="$router.push({ name: 'watch-anime', params: { 'animeId': params, 'episode': episode.episodeId } })"
-                            class="bg-[red] text-white cursor-pointer w-10 text-center">{{
+                            class="bg-[red] text-white cursor-pointer w-10 text-center hover:outline outline-1 outline-white">{{
                                 episode.episodeNum
                             }}</span>
 

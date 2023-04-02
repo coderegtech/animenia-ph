@@ -136,7 +136,7 @@ export default defineComponent({
                 <div class="relative w-full md:p-5 flex flex-col md:flex-col-reverse gap-3" v-else>
 
 
-                    <div class="w-full h-[265px] xl:min-h-[75vh] relative  overflow-hidden">
+                    <div class="w-full min-h-[270px] h-[265px] sm:min-h-[380px] xl:min-h-[75vh] ">
                         <iframe class="w-full h-full " :src="animeLink" allowfullscreen="true" marginwidth="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             marginheight="0" scrolling="no" frameborder="0"></iframe>
@@ -206,7 +206,7 @@ export default defineComponent({
                     <div class=" flex flex-wrap gap-2">
                         <span v-for="episode in animeDetails.episodesList" :key="episode.episodeNum"
                             @click="$router.push({ name: 'watch-anime', params: { 'animeid': animeId, 'episode': episode.episodeId } })"
-                            class="bg-[red] text-white cursor-pointer w-10 text-center"
+                            class="bg-[red] text-white cursor-pointer w-10 text-center hover:outline outline-1 outline-white"
                             :class="[currentEpisode === episode.episodeId ? 'bg-black border border-white' : '']">{{
                                 episode.episodeNum
                             }}</span>
