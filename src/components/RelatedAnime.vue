@@ -60,10 +60,11 @@ export default defineComponent({
 
             <!-- anime list items -->
             <div v-for="anime, index in animeList" :key="index"
-                class="max-w-[130px] md:max-w-[200px] md:max-h-96 grid md:grid-cols-2 gap-2 items-start" v-else>
+                class="max-w-[130px] md:max-w-[200px] md:max-h-96 grid md:grid-cols-2 gap-2 items-start"
+                @click="$router.push({ name: 'anime', params: { 'animeId': anime.animeId } })" v-else>
                 <!-- image box -->
-                <div class=" anime-img duration-300 relative min-w-[50px] w-full h-[100px]  bg-white/20 rounded-md overflow-hidden"
-                    @click="$router.push({ name: 'anime', params: { 'animeId': anime.animeId } })">
+                <div
+                    class=" anime-img duration-300 relative min-w-[50px] w-full h-[100px]  bg-white/20 rounded-md overflow-hidden">
                     <img class="  w-full h-full object-cover duration-300" :src="anime?.animeImg" alt="">
 
                     <span
