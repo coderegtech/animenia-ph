@@ -69,13 +69,13 @@ export default defineComponent({
 
                     <span
                         class="play-btn opacity-0 duration-300 absolute top-0 left-0 w-full h-full bg-black/50 grid place-items-center cursor-pointer"><v-icon
-                            name="hi-solid-play" scale="2.5" color="red"></v-icon></span>
+                            name="bi-play-circle" scale="2.5" color="red"></v-icon></span>
                 </div>
 
-                <div class="min-w-[120px]">
+                <div class="">
                     <!-- anime title -->
                     <p class="text-[13px] md:text-base font-semibold text-white hover:text-[red] cursor-pointer">{{
-                        anime.animeTitle?.substring(0, 35) + "..."
+                        anime.animeTitle?.substring(0, 30) + "..."
                     }}</p>
 
 

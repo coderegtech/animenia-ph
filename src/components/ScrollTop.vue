@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted, ref } from 'vue';
 
 const showButton = ref(false)
 
@@ -25,6 +25,6 @@ onMounted(() => {
 
 <template>
     <div :class="[showButton ? 'block' : 'hidden']" class="fixed bottom-5 right-5 " @click="scrollToTop">
-        <v-icon name="bi-arrow-up-circle-fill" scale="2.5" color="red"></v-icon>
+        <v-icon name="bi-arrow-up-circle-fill" scale="2.5" color="white"></v-icon>
     </div>
 </template>
