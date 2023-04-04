@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div :class="[showButton ? 'block' : 'hidden']" class="fixed bottom-5 right-5 " @click="scrollToTop">
+    <div :class="[showButton ? 'block' : 'hidden']" class="fixed bottom-5 right-5 cursor-pointer" @click="scrollToTop">
         <v-icon name="bi-arrow-up-circle-fill" scale="2.5" color="white"></v-icon>
     </div>
 </template>
