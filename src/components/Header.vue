@@ -49,7 +49,7 @@ export default defineComponent({
 
 <template>
     <header
-        class="fixed top-0 left-1/2 -translate-x-1/2 max-w-[1440px] w-full mx-auto  min-h-[60px] p-5 lg:py-8 bg-black border-b-4 border-[red] flex gap-5 justify-between items-center z-50">
+        class="fixed top-0 left-1/2 -translate-x-1/2 max-w-[2080px] w-full mx-auto  min-h-[60px] p-5 lg:py-8 bg-black border-b-4 border-[red] flex gap-5 justify-between items-center z-50">
 
 
 
