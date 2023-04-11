@@ -81,7 +81,8 @@ export default defineComponent({
             <div class="w-full p-5 flex gap-5 flex-wrap justify-center" v-else>
 
                 <!-- anime list items -->
-                <div v-for="anime in AnimeData" :key="anime.animeId" class="max-w-[130px] md:max-w-[200px] md:max-h-96"
+                <div v-for="anime in AnimeData" :key="anime.animeId"
+                    class="relative max-w-[130px] md:max-w-[190px] md:max-h-96"
                     @click="$router.push({ name: 'anime', params: { 'animeId': anime.animeId } })">
                     <!-- image box -->
                     <div
