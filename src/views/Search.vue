@@ -78,7 +78,7 @@ export default defineComponent({
 
                 <!-- anime list items -->
                 <div v-for="anime, index in animeList" :key="index"
-                    class="relative max-w-[130px] md:max-w-[190px] md:max-h-96"
+                    class="relative max-w-[150px] md:max-w-[190px] md:max-h-96"
                     @click="$router.push({ name: 'anime', params: { 'animeId': anime.animeId } })" v-else>
                     <!-- image box -->
                     <div

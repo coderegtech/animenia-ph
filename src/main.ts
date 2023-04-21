@@ -4,9 +4,9 @@ import router from './routes';
 import './style.css';
 
 import { addIcons, OhVueIcon } from "oh-vue-icons";
-import { BiArrowUpCircleFill, BiPlayCircle, IoSearch } from "oh-vue-icons/icons";
+import { BiArrowUpCircleFill, BiPlayCircle, HiSolidChevronDoubleLeft, HiSolidChevronDoubleRight, IoSearch } from "oh-vue-icons/icons";
 
-addIcons(IoSearch, BiArrowUpCircleFill, BiPlayCircle);
+addIcons(IoSearch, BiArrowUpCircleFill, BiPlayCircle, HiSolidChevronDoubleRight, HiSolidChevronDoubleLeft);
 
 const app = createApp(App)
 
