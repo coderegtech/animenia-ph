@@ -52,7 +52,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class=" hidden lg:flex flex-col gap-5 basis-[600px]">
+  <div class=" hidden lg:flex flex-col gap-5 basis-[550px]">
     <div class="bg-black rounded-xl overflow-hidden">
       <header class="bg-[red] w-full flex justify-between items-center">
 

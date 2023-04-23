@@ -127,6 +127,12 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.router-link-active:not(.title) {
+    color: red;
+    border-bottom: 2px solid red;
+}
+
+
 .navbar {
     height: calc(100vh - 80px);
 }

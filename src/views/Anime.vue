@@ -94,7 +94,7 @@ export default defineComponent({
                 <div class="relative w-full flex justify-start items-start flex-col  xl:flex-row gap-5 p-5">
 
                     <!-- image container -->
-                    <img class=" max-h-72 lg:max-w-[300px] md:max-h-96 object-contain" :src="animeDetails.animeImg" alt="">
+                    <img class=" max-h-72 lg:max-w-[300px] md:max-h-96 object-cover" :src="animeDetails.animeImg" alt="">
                     <!-- anime details -->
                     <div class="w-full">
                         <h2 class="text-xl text-white font-bold">
