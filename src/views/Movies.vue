@@ -90,7 +90,7 @@ export default defineComponent({
                     <div class="text-center p-3">
                         <!-- anime title -->
                         <p class="text-[15px] md:text-base font-semibold text-white hover:text-[red] cursor-pointer">{{
-                            anime.animeTitle.substring(0, 30) + "..."
+                            anime.animeTitle.length > 30 ? anime.animeTitle.substring(0, 30) + "..." : anime.animeTitle
                         }}</p>
 
 

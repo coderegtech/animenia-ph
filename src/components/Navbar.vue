@@ -1,6 +1,5 @@
 <script lang="ts" >
 import { defineComponent } from 'vue';
-
 import axios from 'axios';
 import { Search } from '../types/Anime';
 import Loading from './Loading.vue';
