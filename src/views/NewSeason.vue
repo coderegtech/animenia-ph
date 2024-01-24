@@ -32,7 +32,7 @@ export default defineComponent({
     }, methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<NewSeason[]>(`https://webdis-emec.onrender.com/new-season?page=${this.page}`).then(response => {
+            await axios.get<NewSeason[]>(`/api/new-season?page=${this.page}`).then(response => {
                 this.animeList = response.data
                 this.isLoading = false
 

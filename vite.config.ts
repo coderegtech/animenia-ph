@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://webdis-emec.onrender.com/',
+        target: 'https://webdis-lfu7.onrender.com/',
         changeOrigin: true,
            secure: false,      
            ws: true,

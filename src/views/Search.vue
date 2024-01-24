@@ -31,7 +31,7 @@ export default defineComponent({
     methods: {
         async fetchAnime(name: string | string[]) {
             this.isLoading = true
-            await axios.get<Search[]>(`https://webdis-emec.onrender.com/search?keyw=${name}`).then(response => {
+            await axios.get<Search[]>(`/api/search?keyw=${name}`).then(response => {
 
                 this.animeList = response.data
                 this.isLoading = false
