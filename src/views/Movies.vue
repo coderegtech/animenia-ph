@@ -24,7 +24,7 @@ export default defineComponent({
     }, methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<Movies[]>(`/api/anime-movies?page=${this.page}`).then(response => {
+            await axios.get<Movies[]>(`https://webdis-lfu7.onrender.com/anime-movies?page=${this.page}`).then(response => {
                 this.animeList = response.data
                 this.isLoading = false
 

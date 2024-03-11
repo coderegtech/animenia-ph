@@ -47,7 +47,7 @@ export default defineComponent({
                 behavior: 'smooth'
             })
 
-            await axios.get<Genres[]>(`/api/genre/${genre}?page=${this.page}`).then(response => {
+            await axios.get<Genres[]>(`https://webdis-lfu7.onrender.com/genre/${genre}?page=${this.page}`).then(response => {
 
                 this.animeList = response.data
                 this.isLoading = false

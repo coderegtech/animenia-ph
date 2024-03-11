@@ -60,7 +60,7 @@ export default defineComponent({
             this.isLoading = true;
 
             await axios
-                .get(`/api/anime-details/${this.animeId}`)
+                .get(`https://webdis-lfu7.onrender.com/anime-details/${this.animeId}`)
                 .then((response) => {
 
                     this.animeDetails = { ...response.data };

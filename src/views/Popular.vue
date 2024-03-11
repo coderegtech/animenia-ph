@@ -24,7 +24,7 @@ export default defineComponent({
     }, methods: {
         async fetchAnime() {
             this.isLoading = true
-            await axios.get<Popular[]>(`/api/popular?page=${this.page}`).then(response => {
+            await axios.get<Popular[]>(`https://webdis-lfu7.onrender.com/popular?page=${this.page}`).then(response => {
                 this.animeList = response.data
                 this.isLoading = false
 

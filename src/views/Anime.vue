@@ -59,7 +59,7 @@ export default defineComponent({
             })
 
             await axios
-                .get(`/api/anime-details/${animeId}`)
+                .get(`https://webdis-lfu7.onrender.com/anime-details/${animeId}`)
                 .then((response) => {
 
                     this.animeDetails = { ...response.data };
